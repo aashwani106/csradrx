@@ -83,11 +83,6 @@ Source feeds:
 
 ## 5. AI / LLM Ecosystem (MUST HAVE)
 
-Why:
-
-* biggest trend in CS right now
-* viral potential
-
 Include:
 
 * OpenAI blog
@@ -255,35 +250,4 @@ The MVP source stack is:
 * security (critical only)
 
 ---
-
-## 14. MVP Source Count
-
-Keep it:
-
-* GitHub: 1 source
-* engineering blogs: 4 sources
-* AI ecosystem: 3 sources
-* framework blogs: 4 sources
-* arXiv: 1 source
-* security: 1 source
-
-Total MVP source count:
-
-* 14 primary sources/feeds
-
----
-
-## 15. Summary
-
-This MVP source set is intentionally narrow.
-
-It captures:
-
-* real developer adoption signals from GitHub
-* trusted production insights from engineering blogs
-* major AI ecosystem changes
-* high-impact framework updates
-* filtered research signals
-* critical security alerts
-
-This gives CSRadrX a practical MVP ingestion layer without pulling in the full source universe too early.
+ 
