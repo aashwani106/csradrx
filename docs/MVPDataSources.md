@@ -26,11 +26,6 @@ Keep it:
 
 ## 3. GitHub (CORE ENGINE)
 
-Why:
-
-* fastest signal
-* real adoption
-* developers trust it
 
 Include:
 
@@ -60,11 +55,7 @@ GitHub filtering rules:
 
 ## 4. Engineering Blogs (HIGH TRUST)
 
-Why:
-
-* real-world systems
-* production-level insights
-
+ 
 Include (top only):
 
 * Cloudflare
@@ -107,10 +98,7 @@ AI filtering rules:
 
 ## 6. Framework Updates (HIGH IMPACT)
 
-Why:
-
-* affects huge dev audience
-
+ 
 Include:
 
 * React
@@ -128,10 +116,7 @@ Source feeds:
 ---
 
 ## 7. arXiv (Filtered Only)
-
-Why:
-
-* research signal
+ 
 
 Constraint:
 
@@ -157,10 +142,7 @@ arXiv filtering:
 
 ## 8. Security Alerts (Optional but Strong)
 
-Why:
-
-* high urgency
-* shareable
+ 
 
 Include:
 
