@@ -35,6 +35,12 @@ function getSourceWeight(event: RankedEvent): number {
   if (owner === "deepmind") return 0.9;
   if (owner === "anthropic") return 0.9;
   if (owner === "huggingface") return 0.7;
+  if(owner === "microsoft") return 0.6;
+  if(owner === "aws") return 0.6;
+  if(owner === "googlecloud") return 0.6;
+  if(owner === "vercel") return 0.5;
+  if(owner === "stripe") return 0.5;
+  
 
   return 0.6;
 }

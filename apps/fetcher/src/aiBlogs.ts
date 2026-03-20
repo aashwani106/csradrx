@@ -76,6 +76,31 @@ const sources = [
     feedUrl: "https://blogs.microsoft.com/feed/",
     isActive: true,
   },
+  {
+    owner: "aws",
+    repoName: "AWS Blog",
+    feedUrl: "https://aws.amazon.com/blogs/aws/feed/",
+    isActive: true,
+  },
+  {
+    owner: "googlecloud",
+    repoName: "Google Cloud Blog",
+    feedUrl: "https://cloud.google.com/blog/rss/",
+    isActive: true,
+  },
+  {
+    owner: "vercel",
+    repoName: "Vercel Blog",
+    feedUrl: "https://vercel.com/blog/rss.xml",
+    isActive: true,
+  },
+  {
+    owner: "stripe",
+    repoName: "Stripe Blog",
+    feedUrl: "https://stripe.com/blog/feed.rss",
+    isActive: true,
+  },
+
 ];
 
 type NormalizedAiArticle = {
@@ -122,6 +147,21 @@ function isHighSignalArticle(item: Parser.Item) {
     "reasoning",
     "system card",
     "safety",
+    "ai",
+    "model",
+    "api",
+    "sdk",
+    "agent",
+    "release",
+    "launch",
+    "infrastructure",
+    "cloud",
+    "performance",
+    "database",
+    "serverless",
+    "edge",
+    "security",
+    "scaling",
   ];
 
   const mediumSignals = [
