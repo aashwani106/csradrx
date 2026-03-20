@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+
+model Event {
+  id            String   @id @default(cuid())
+
+  title         String
+  url           String
+
+  category      String
+  type          String
+
+  repoName      String
+  owner         String
+
+  stars         Int?
+  releaseTag    String?
+
+  publishedAt   DateTime
+  createdAt     DateTime @default(now())
+
+  rawData       Json?
+
+  analysis      EventAnalysis?
+  score         EventScore?
+
+  @@index([publishedAt])
+  @@index([category, type])
+  @@unique([url])
+}
+
+model EventAnalysis {
+  id        String   @id @default(cuid())
+  eventId   String   @unique
+
+  event     Event    @relation(fields: [eventId], references: [id])
+
+  summary   String
+  keyPoints String[]
+  impact    String
+
+  createdAt DateTime @default(now())
+}
+
+model EventScore {
+  id        String   @id @default(cuid())
+  eventId   String   @unique
+
+  event     Event    @relation(fields: [eventId], references: [id])
+
+  score     Float
+  createdAt DateTime @default(now())
+
+  @@index([score])
+}
