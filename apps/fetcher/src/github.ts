@@ -77,7 +77,7 @@ async function fetchGithub() {
     .toISOString()
     .split("T")[0];
 
-  const url = `https://api.github.com/search/repositories?q=created:>${last7Days}&sort=stars&order=desc`;
+  const url = `https://api.github.com/search/repositories?q=created:>${last7Days}&sort=stars&order=desc&per_page=100`;
 
   const data: any = await fetchGithubWithRetry(url);
 
@@ -90,7 +90,7 @@ async function fetchGithub() {
   const filteredRepos = data.items.filter((repo: any) => {
     return (
       !repo.fork &&
-      repo.stargazers_count > 500 &&
+      repo.stargazers_count >= 300 &&
       ["JavaScript", "TypeScript", "Python", "Go", "Rust"].includes(
         repo.language
       )

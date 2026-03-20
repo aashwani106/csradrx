@@ -10,6 +10,7 @@ const sourceWeights: Record<string, number> = {
   anthropic: 30,
   huggingface: 25,
   "microsoft-ai": 22,
+  microsoft: 22,
 };
 
 export default function scoreAiBlogEvent(article: AiBlogInput): number {

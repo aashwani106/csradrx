@@ -70,6 +70,12 @@ const sources = [
     feedUrl: "https://www.microsoft.com/en-us/research/feed/",
     isActive: true,
   },
+  {
+    owner: "microsoft",
+    repoName: "Microsoft Blog",
+    feedUrl: "https://blogs.microsoft.com/feed/",
+    isActive: true,
+  },
 ];
 
 type NormalizedAiArticle = {
@@ -91,6 +97,7 @@ const sourceWeights: Record<string, number> = {
   anthropic: 4,
   huggingface: 3,
   "microsoft-ai": 3,
+  microsoft: 3,
 };
 
 function isHighSignalArticle(item: Parser.Item) {
@@ -104,6 +111,10 @@ function isHighSignalArticle(item: Parser.Item) {
     "new model",
     "model",
     "api",
+    "copilot",
+    "azure",
+    "openai",
+    "developer",
     "pricing",
     "capabilit",
     "agent",
@@ -111,6 +122,20 @@ function isHighSignalArticle(item: Parser.Item) {
     "reasoning",
     "system card",
     "safety",
+  ];
+
+  const mediumSignals = [
+    "research",
+    "benchmark",
+    "evaluation",
+    "security",
+    "inference",
+    "deployment",
+    "training",
+    "open source",
+    "workflow",
+    "automation",
+    "agents",
   ];
 
   const weakSignals = [
@@ -126,9 +151,10 @@ function isHighSignalArticle(item: Parser.Item) {
   ];
 
   const hasStrongSignal = strongSignals.some((keyword) => content.includes(keyword));
+  const hasMediumSignal = mediumSignals.some((keyword) => content.includes(keyword));
   const hasWeakSignal = weakSignals.some((keyword) => content.includes(keyword));
 
-  return hasStrongSignal && !hasWeakSignal;
+  return (hasStrongSignal || hasMediumSignal) && !hasWeakSignal;
 }
 
 function toJobId(owner: string, link: string) {
@@ -188,7 +214,7 @@ async function fetchAiBlogs() {
     );
   });
 
-  const cappedArticles = normalizedArticles.slice(0, 15);
+  const cappedArticles = normalizedArticles.slice(0, 40);
 
   const existingEvents = await prisma.event.findMany({
     where: {
