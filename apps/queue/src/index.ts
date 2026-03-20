@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import IORedis from "ioredis";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import * as aiAnalysisModule from "../../../packages/core/src/analysis/analyzeAiBlogEvent";
+import * as aiScoringModule from "../../../packages/core/src/scoring/scoreAiBlogEvent";
 import * as analysisModule from "../../../packages/core/src/analysis/analyzeGithubEvent";
 import * as scoringModule from "../../../packages/core/src/scoring/scoreGithubEvent";
 
@@ -41,14 +43,27 @@ const analyzeGithubEvent = resolveModuleFunction(
   analysisModule,
   "analyzeGithubEvent"
 );
+const analyzeAiBlogEvent = resolveModuleFunction(
+  aiAnalysisModule,
+  "analyzeAiBlogEvent"
+);
 const scoreGithubEvent = resolveModuleFunction(scoringModule, "scoreGithubEvent");
+const scoreAiBlogEvent = resolveModuleFunction(aiScoringModule, "scoreAiBlogEvent");
 
 if (typeof analyzeGithubEvent !== "function") {
   throw new Error("Failed to load analyzeGithubEvent");
 }
 
+if (typeof analyzeAiBlogEvent !== "function") {
+  throw new Error("Failed to load analyzeAiBlogEvent");
+}
+
 if (typeof scoreGithubEvent !== "function") {
   throw new Error("Failed to load scoreGithubEvent");
+}
+
+if (typeof scoreAiBlogEvent !== "function") {
+  throw new Error("Failed to load scoreAiBlogEvent");
 }
 
 const prisma = new PrismaClient({
@@ -64,7 +79,79 @@ const queueEvents = new QueueEvents("github-events", { connection });
 const worker = new Worker(
   "github-events",
   async (job) => {
-    console.log(`Starting job ${job.id}: ${job.data.full_name}`);
+    const label = job.data.full_name ?? job.data.title ?? job.id;
+    console.log(`Starting job ${job.id}: ${label}`);
+
+    if (job.data.category === "ai") {
+      const article = job.data;
+
+      const existingEvent = await prisma.event.findUnique({
+        where: { url: article.url },
+        select: { id: true },
+      });
+
+      const event = existingEvent
+        ? await prisma.event.update({
+            where: { id: existingEvent.id },
+            data: {
+              title: article.title,
+              category: "ai",
+              type: "blog",
+              repoName: article.repoName,
+              owner: article.owner,
+              stars: null,
+              publishedAt: new Date(article.publishedAt),
+              rawData: article.rawData,
+            },
+          })
+        : await prisma.event.create({
+            data: {
+              title: article.title,
+              url: article.url,
+              category: "ai",
+              type: "blog",
+              repoName: article.repoName,
+              owner: article.owner,
+              stars: null,
+              publishedAt: new Date(article.publishedAt),
+              rawData: article.rawData,
+            },
+          });
+
+      const analysis = analyzeAiBlogEvent(article);
+
+      await prisma.eventAnalysis.upsert({
+        where: { eventId: event.id },
+        create: {
+          eventId: event.id,
+          summary: analysis.summary,
+          keyPoints: analysis.keyPoints,
+          impact: analysis.impact,
+        },
+        update: {
+          summary: analysis.summary,
+          keyPoints: analysis.keyPoints,
+          impact: analysis.impact,
+        },
+      });
+
+      await prisma.eventScore.upsert({
+        where: { eventId: event.id },
+        create: {
+          eventId: event.id,
+          score: scoreAiBlogEvent(article),
+        },
+        update: {
+          score: scoreAiBlogEvent(article),
+        },
+      });
+
+      return {
+        eventId: event.id,
+        action: existingEvent ? "updated" : "inserted",
+        fullName: article.title,
+      };
+    }
 
     const repo = job.data;
 
@@ -143,7 +230,9 @@ worker.on("ready", () => {
 });
 
 worker.on("active", (job) => {
-  console.log(`Active job ${job.id}: ${job.data.full_name}`);
+  console.log(
+    `Active job ${job.id}: ${job.data.full_name ?? job.data.title ?? job.id}`
+  );
 });
 
 worker.on("completed", (job, result) => {
