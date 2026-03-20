@@ -30,6 +30,9 @@ function resolveModuleFunction(
   exportName: string
 ): ((...args: any[]) => any) | undefined {
   if (typeof mod[exportName] === "function") return mod[exportName];
+  if (mod["module.exports"] && typeof mod["module.exports"][exportName] === "function") {
+    return mod["module.exports"][exportName];
+  }
   if (typeof mod.default === "function") return mod.default;
   if (mod.default && typeof mod.default[exportName] === "function") {
     return mod.default[exportName];
@@ -185,6 +188,7 @@ const worker = new Worker(
               title: event.title,
               url: event.url,
               repoName: event.repoName,
+              owner: event.owner,
               stars: event.stars,
             },
             analysis: {
@@ -300,6 +304,7 @@ const worker = new Worker(
             title: event.title,
             url: event.url,
             repoName: event.repoName,
+            owner: event.owner,
             stars: event.stars,
           },
           analysis: {

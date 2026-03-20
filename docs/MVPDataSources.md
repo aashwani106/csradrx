@@ -162,6 +162,27 @@ Publish only if:
 
 * score > threshold (example: 70)
 
+Trending uses a second-stage ranking formula:
+
+* `finalScore = score * 0.6 + recencyWeight * 0.3 + sourceWeight * 0.1`
+
+Recency weight:
+
+* `< 1 hour` -> `1.0`
+* `< 6 hours` -> `0.8`
+* `< 24 hours` -> `0.6`
+* `> 24 hours` -> `0.3`
+
+Source weight:
+
+* `openai` -> `1.0`
+* `deepmind` -> `0.9`
+* `anthropic` -> `0.9`
+* `huggingface` -> `0.7`
+* `github` -> `0.6`
+
+Trending feeds sort by `finalScore DESC`.
+
 Examples:
 
 * React release -> 90

@@ -238,6 +238,15 @@ GET /technologies
 GET /research
 ```
 
+Trending ranking rules:
+
+* `finalScore = score * 0.6 + recencyWeight * 0.3 + sourceWeight * 0.1`
+* recency weight:
+  `< 1 hour = 1.0`, `< 6 hours = 0.8`, `< 24 hours = 0.6`, `> 24 hours = 0.3`
+* source weight:
+  `openai = 1.0`, `deepmind = 0.9`, `anthropic = 0.9`, `huggingface = 0.7`, `github = 0.6`
+* `/trending` sorts by `finalScore DESC`
+
 ---
 
 ## 4.7 Frontend Dashboard

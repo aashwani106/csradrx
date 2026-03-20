@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import * as rankingModule from "../../../packages/core/src/ranking/rankEvents";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,6 +17,30 @@ const databaseUrl = process.env.DATABASE_URL;
 
 if (!databaseUrl) {
   throw new Error("Missing DATABASE_URL. Add it to packages/db/.env");
+}
+
+function resolveModuleFunction(
+  mod: Record<string, any>,
+  exportName: string
+): ((...args: any[]) => any) | undefined {
+  if (typeof mod[exportName] === "function") return mod[exportName];
+  if (mod["module.exports"] && typeof mod["module.exports"][exportName] === "function") {
+    return mod["module.exports"][exportName];
+  }
+  if (typeof mod.default === "function") return mod.default;
+  if (mod.default && typeof mod.default[exportName] === "function") {
+    return mod.default[exportName];
+  }
+  if (mod.default && typeof mod.default.default === "function") {
+    return mod.default.default;
+  }
+  return undefined;
+}
+
+const rankEvents = resolveModuleFunction(rankingModule, "rankEvents");
+
+if (typeof rankEvents !== "function") {
+  throw new Error("Failed to load rankEvents");
 }
 
 const prisma = new PrismaClient({
@@ -49,19 +74,21 @@ app.get("/trending", async (_req, res) => {
   const events = await prisma.event.findMany({
     include: eventInclude,
     where: {
-      category: "github",
       publishedAt: {
         gte: last48Hours,
       },
     },
-    orderBy: [
-      { score: { score: "desc" } },
-      { stars: "desc" },
-    ],
-    take: 20,
+    orderBy: [{ publishedAt: "desc" }],
+    take: 100,
   });
 
-  res.json(events);
+  const rankedEvents = rankEvents(events).slice(0, 20);
+
+  rankedEvents.forEach((event) => {
+    console.log("Posted:", event.title, event.ranking.finalScore);
+  });
+
+  res.json(rankedEvents);
 });
 
 app.get("/research", async (_req, res) => {

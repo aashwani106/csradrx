@@ -1,3 +1,5 @@
+import generateHook from "./generateHook";
+
 type TweetEvent = {
   category: string;
   title: string;
@@ -17,15 +19,17 @@ function trim(text: string, limit: number) {
 }
 
 export function formatTweet(event: TweetEvent, analysis: TweetAnalysis) {
+  const hook = generateHook(event);
+
   if (event.category === "ai") {
     return trim(
-      `⚡ ${event.title}\n\n${analysis.summary}\n\nWhy it matters:\n${analysis.impact}\n\n🔗 ${event.url}`,
+      `${hook}\n\n${event.title}\n\n${analysis.impact}\n\n🔗 ${event.url}`,
       280
     );
   }
 
   return trim(
-    `🔥 ${event.repoName}\n\n${analysis.summary}\n\n⭐ ${event.stars ?? 0}\n\n🔗 ${event.url}`,
+    `${hook}\n\n${event.title}\n\n${analysis.impact}\n\n⭐ ${event.stars ?? 0}\n\n🔗 ${event.url}`,
     280
   );
 }

@@ -37,31 +37,38 @@ const sources = [
     owner: "openai",
     repoName: "OpenAI News",
     feedUrl: "https://openai.com/news/rss.xml",
+    isActive: true,
   },
   {
     owner: "huggingface",
     repoName: "Hugging Face Blog",
     feedUrl: "https://huggingface.co/blog/feed.xml",
+    isActive: true,
   },
   {
     owner: "anthropic",
     repoName: "Anthropic News",
     feedUrl: "https://www.anthropic.com/rss.xml",
+    isActive: false,
   },
   {
     owner: "deepmind",
     repoName: "DeepMind Blog",
     feedUrl: "https://deepmind.google/blog/rss.xml",
+    isActive: true,
   },
   {
     owner: "google-ai",
     repoName: "Google AI Blog",
-    feedUrl: "https://ai.googleblog.com/feeds/posts/default",
+    // feedUrl: "https://ai.googleblog.com/feeds/posts/default",
+    feedUrl: "https://blog.google/technology/ai/rss/",
+    isActive: true,
   },
   {
     owner: "microsoft-ai",
     repoName: "Microsoft Research",
     feedUrl: "https://www.microsoft.com/en-us/research/feed/",
+    isActive: true,
   },
 ];
 
@@ -131,7 +138,7 @@ function toJobId(owner: string, link: string) {
 async function fetchAiBlogs() {
   const normalizedArticles: NormalizedAiArticle[] = [];
 
-  for (const source of sources) {
+  for (const source of sources.filter((item) => item.isActive)) {
     let feed;
     try {
       feed = await parser.parseURL(source.feedUrl);
