@@ -34,7 +34,7 @@ Install:
 
 ## Environment Setup
 
-Create or update [packages/db/.env](/Users/thekalyugh/Desktop/Projects/CSRadrX/csradrx/packages/db/.env) with:
+Create or update `packages/db/.env` with:
 
 ```env
 DATABASE_URL="your_database_url"
@@ -42,7 +42,7 @@ REDIS_URL="redis://127.0.0.1:6379"
 GITHUB_TOKEN="your_github_token"
 ```
 
-You can use [packages/db/.env.example](/Users/thekalyugh/Desktop/Projects/CSRadrX/csradrx/packages/db/.env.example) as a template.
+You can use `packages/db/.env.example` as a template.
 
 ## Install Dependencies
 
@@ -72,14 +72,14 @@ PONG
 Start the worker first:
 
 ```bash
-cd /Users/thekalyugh/Desktop/Projects/CSRadrX/csradrx/apps/queue
+cd apps/queue
 npx tsx src/index.ts
 ```
 
 In a second terminal, run the fetcher:
 
 ```bash
-cd /Users/thekalyugh/Desktop/Projects/CSRadrX/csradrx/apps/fetcher
+cd apps/fetcher
 npx tsx src/github.ts
 ```
 
@@ -99,7 +99,7 @@ Processed job owner/repo: inserted owner/repo
 In a third terminal, start the API:
 
 ```bash
-cd /Users/thekalyugh/Desktop/Projects/CSRadrX/csradrx/apps/api
+cd apps/api
 node --import tsx src/index.ts
 ```
 
