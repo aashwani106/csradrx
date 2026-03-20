@@ -32,11 +32,39 @@ model Event {
 
   analysis      EventAnalysis?
   score         EventScore?
+  discordDeliveries DiscordDelivery[]
 
   @@index([publishedAt])
   @@index([category, type])
   @@index([tweeted, tweetedAt])
   @@unique([url])
+}
+
+model ServerConfig {
+  id             String   @id @default(cuid())
+  guildId        String   @unique
+  channelId      String
+  enabledGithub  Boolean  @default(true)
+  enabledAi      Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  deliveries     DiscordDelivery[]
+
+  @@index([guildId, channelId])
+}
+
+model DiscordDelivery {
+  id             String       @id @default(cuid())
+  eventId        String
+  serverConfigId String
+  deliveredAt    DateTime     @default(now())
+
+  event          Event        @relation(fields: [eventId], references: [id])
+  serverConfig   ServerConfig @relation(fields: [serverConfigId], references: [id])
+
+  @@unique([eventId, serverConfigId])
+  @@index([serverConfigId, deliveredAt])
 }
 
 model EventAnalysis {

@@ -1,12 +1,11 @@
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
-import { QueueEvents, Worker } from "bullmq";
+import { Queue, QueueEvents, Worker } from "bullmq";
 import dotenv from "dotenv";
 import IORedis from "ioredis";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as aiAnalysisModule from "../../../packages/core/src/analysis/analyzeAiBlogEvent";
-import * as distributionModule from "../../../packages/core/src/distribution/postToTwitter";
 import * as tweetDecisionModule from "../../../packages/core/src/distribution/shouldTweet";
 import * as aiScoringModule from "../../../packages/core/src/scoring/scoreAiBlogEvent";
 import * as analysisModule from "../../../packages/core/src/analysis/analyzeGithubEvent";
@@ -49,7 +48,6 @@ const analyzeAiBlogEvent = resolveModuleFunction(
   aiAnalysisModule,
   "analyzeAiBlogEvent"
 );
-const postToTwitter = resolveModuleFunction(distributionModule, "postToTwitter");
 const scoreGithubEvent = resolveModuleFunction(scoringModule, "scoreGithubEvent");
 const scoreAiBlogEvent = resolveModuleFunction(aiScoringModule, "scoreAiBlogEvent");
 const shouldTweet = resolveModuleFunction(tweetDecisionModule, "shouldTweet");
@@ -60,10 +58,6 @@ if (typeof analyzeGithubEvent !== "function") {
 
 if (typeof analyzeAiBlogEvent !== "function") {
   throw new Error("Failed to load analyzeAiBlogEvent");
-}
-
-if (typeof postToTwitter !== "function") {
-  throw new Error("Failed to load postToTwitter");
 }
 
 if (typeof scoreGithubEvent !== "function") {
@@ -87,6 +81,9 @@ const connection = new IORedis(redisUrl, {
 });
 
 const queueEvents = new QueueEvents("github-events", { connection });
+const distributionQueue = new Queue("distribution-events", {
+  connection: connection as any,
+});
 
 const worker = new Worker(
   "github-events",
@@ -178,29 +175,29 @@ const worker = new Worker(
       });
 
       if (tweetDecision.shouldTweet) {
-        const tweetResult = await postToTwitter(
+        await distributionQueue.add(
+          "post-discord-event",
           {
-            category: event.category,
+            eventId: event.id,
             title: event.title,
-            url: event.url,
-            repoName: event.repoName,
-            stars: event.stars,
+            event: {
+              category: event.category,
+              title: event.title,
+              url: event.url,
+              repoName: event.repoName,
+              stars: event.stars,
+            },
+            analysis: {
+              summary: analysis.summary,
+              impact: analysis.impact,
+            },
           },
           {
-            summary: analysis.summary,
-            impact: analysis.impact,
+            jobId: `discord-${event.id}`,
+            removeOnComplete: true,
+            removeOnFail: true,
           }
         );
-
-        if (tweetResult.success) {
-          await prisma.event.update({
-            where: { id: event.id },
-            data: {
-              tweeted: true,
-              tweetedAt: new Date(),
-            },
-          });
-        }
       }
 
       return {
@@ -293,29 +290,29 @@ const worker = new Worker(
     });
 
     if (tweetDecision.shouldTweet) {
-      const tweetResult = await postToTwitter(
+      await distributionQueue.add(
+        "post-discord-event",
         {
-          category: event.category,
+          eventId: event.id,
           title: event.title,
-          url: event.url,
-          repoName: event.repoName,
-          stars: event.stars,
+          event: {
+            category: event.category,
+            title: event.title,
+            url: event.url,
+            repoName: event.repoName,
+            stars: event.stars,
+          },
+          analysis: {
+            summary: analysis.summary,
+            impact: analysis.impact,
+          },
         },
         {
-          summary: analysis.summary,
-          impact: analysis.impact,
+          jobId: `discord-${event.id}`,
+          removeOnComplete: true,
+          removeOnFail: true,
         }
       );
-
-      if (tweetResult.success) {
-        await prisma.event.update({
-          where: { id: event.id },
-          data: {
-            tweeted: true,
-            tweetedAt: new Date(),
-          },
-        });
-      }
     }
 
     return {
