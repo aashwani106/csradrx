@@ -27,12 +27,15 @@ model Event {
   createdAt     DateTime @default(now())
 
   rawData       Json?
+  tweeted       Boolean  @default(false)
+  tweetedAt     DateTime?
 
   analysis      EventAnalysis?
   score         EventScore?
 
   @@index([publishedAt])
   @@index([category, type])
+  @@index([tweeted, tweetedAt])
   @@unique([url])
 }
 

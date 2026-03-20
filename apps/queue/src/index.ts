@@ -6,6 +6,8 @@ import IORedis from "ioredis";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as aiAnalysisModule from "../../../packages/core/src/analysis/analyzeAiBlogEvent";
+import * as distributionModule from "../../../packages/core/src/distribution/postToTwitter";
+import * as tweetDecisionModule from "../../../packages/core/src/distribution/shouldTweet";
 import * as aiScoringModule from "../../../packages/core/src/scoring/scoreAiBlogEvent";
 import * as analysisModule from "../../../packages/core/src/analysis/analyzeGithubEvent";
 import * as scoringModule from "../../../packages/core/src/scoring/scoreGithubEvent";
@@ -47,8 +49,10 @@ const analyzeAiBlogEvent = resolveModuleFunction(
   aiAnalysisModule,
   "analyzeAiBlogEvent"
 );
+const postToTwitter = resolveModuleFunction(distributionModule, "postToTwitter");
 const scoreGithubEvent = resolveModuleFunction(scoringModule, "scoreGithubEvent");
 const scoreAiBlogEvent = resolveModuleFunction(aiScoringModule, "scoreAiBlogEvent");
+const shouldTweet = resolveModuleFunction(tweetDecisionModule, "shouldTweet");
 
 if (typeof analyzeGithubEvent !== "function") {
   throw new Error("Failed to load analyzeGithubEvent");
@@ -58,12 +62,20 @@ if (typeof analyzeAiBlogEvent !== "function") {
   throw new Error("Failed to load analyzeAiBlogEvent");
 }
 
+if (typeof postToTwitter !== "function") {
+  throw new Error("Failed to load postToTwitter");
+}
+
 if (typeof scoreGithubEvent !== "function") {
   throw new Error("Failed to load scoreGithubEvent");
 }
 
 if (typeof scoreAiBlogEvent !== "function") {
   throw new Error("Failed to load scoreAiBlogEvent");
+}
+
+if (typeof shouldTweet !== "function") {
+  throw new Error("Failed to load shouldTweet");
 }
 
 const prisma = new PrismaClient({
@@ -119,6 +131,7 @@ const worker = new Worker(
           });
 
       const analysis = analyzeAiBlogEvent(article);
+      const score = scoreAiBlogEvent(article);
 
       await prisma.eventAnalysis.upsert({
         where: { eventId: event.id },
@@ -139,12 +152,56 @@ const worker = new Worker(
         where: { eventId: event.id },
         create: {
           eventId: event.id,
-          score: scoreAiBlogEvent(article),
+          score,
         },
         update: {
-          score: scoreAiBlogEvent(article),
+          score,
         },
       });
+
+      const tweetsToday = await prisma.event.count({
+        where: {
+          tweeted: true,
+          tweetedAt: {
+            gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
+          },
+        },
+      });
+
+      const tweetDecision = shouldTweet({
+        category: event.category,
+        tweeted: event.tweeted,
+        tweetsToday,
+        score,
+        summary: analysis.summary,
+        impact: analysis.impact,
+      });
+
+      if (tweetDecision.shouldTweet) {
+        const tweetResult = await postToTwitter(
+          {
+            category: event.category,
+            title: event.title,
+            url: event.url,
+            repoName: event.repoName,
+            stars: event.stars,
+          },
+          {
+            summary: analysis.summary,
+            impact: analysis.impact,
+          }
+        );
+
+        if (tweetResult.success) {
+          await prisma.event.update({
+            where: { id: event.id },
+            data: {
+              tweeted: true,
+              tweetedAt: new Date(),
+            },
+          });
+        }
+      }
 
       return {
         eventId: event.id,
@@ -189,6 +246,7 @@ const worker = new Worker(
         });
 
     const analysis = analyzeGithubEvent(repo);
+    const score = scoreGithubEvent(repo);
 
     await prisma.eventAnalysis.upsert({
       where: { eventId: event.id },
@@ -209,12 +267,56 @@ const worker = new Worker(
       where: { eventId: event.id },
       create: {
         eventId: event.id,
-        score: scoreGithubEvent(repo),
+        score,
       },
       update: {
-        score: scoreGithubEvent(repo),
+        score,
       },
     });
+
+    const tweetsToday = await prisma.event.count({
+      where: {
+        tweeted: true,
+        tweetedAt: {
+          gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
+        },
+      },
+    });
+
+    const tweetDecision = shouldTweet({
+      category: event.category,
+      tweeted: event.tweeted,
+      tweetsToday,
+      score,
+      summary: analysis.summary,
+      impact: analysis.impact,
+    });
+
+    if (tweetDecision.shouldTweet) {
+      const tweetResult = await postToTwitter(
+        {
+          category: event.category,
+          title: event.title,
+          url: event.url,
+          repoName: event.repoName,
+          stars: event.stars,
+        },
+        {
+          summary: analysis.summary,
+          impact: analysis.impact,
+        }
+      );
+
+      if (tweetResult.success) {
+        await prisma.event.update({
+          where: { id: event.id },
+          data: {
+            tweeted: true,
+            tweetedAt: new Date(),
+          },
+        });
+      }
+    }
 
     return {
       eventId: event.id,
