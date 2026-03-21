@@ -21,11 +21,15 @@ jobs:
       - name: Install pnpm
         run: npm install -g pnpm
 
+       
       - name: Install dependencies
         run: pnpm install
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+   
       - name: Run fetcher
-        run: pnpm tsx apps/fetcher/src/aiBlogs.ts
+        run: cd apps/fetcher && pnpm tsx src/aiBlogs.ts
         env:
           REDIS_URL: ${{ secrets.REDIS_URL }}
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
