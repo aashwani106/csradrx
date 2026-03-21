@@ -81,6 +81,7 @@ const prisma = new PrismaClient({
 
 const connection = new IORedis(redisUrl, {
   maxRetriesPerRequest: null,
+  tls: {},
 });
 
 const queueEvents = new QueueEvents("github-events", { connection });
@@ -104,31 +105,31 @@ const worker = new Worker(
 
       const event = existingEvent
         ? await prisma.event.update({
-            where: { id: existingEvent.id },
-            data: {
-              title: article.title,
-              category: "ai",
-              type: "blog",
-              repoName: article.repoName,
-              owner: article.owner,
-              stars: null,
-              publishedAt: new Date(article.publishedAt),
-              rawData: article.rawData,
-            },
-          })
+          where: { id: existingEvent.id },
+          data: {
+            title: article.title,
+            category: "ai",
+            type: "blog",
+            repoName: article.repoName,
+            owner: article.owner,
+            stars: null,
+            publishedAt: new Date(article.publishedAt),
+            rawData: article.rawData,
+          },
+        })
         : await prisma.event.create({
-            data: {
-              title: article.title,
-              url: article.url,
-              category: "ai",
-              type: "blog",
-              repoName: article.repoName,
-              owner: article.owner,
-              stars: null,
-              publishedAt: new Date(article.publishedAt),
-              rawData: article.rawData,
-            },
-          });
+          data: {
+            title: article.title,
+            url: article.url,
+            category: "ai",
+            type: "blog",
+            repoName: article.repoName,
+            owner: article.owner,
+            stars: null,
+            publishedAt: new Date(article.publishedAt),
+            rawData: article.rawData,
+          },
+        });
 
       const analysis = analyzeAiBlogEvent(article);
       const score = scoreAiBlogEvent(article);
@@ -220,31 +221,31 @@ const worker = new Worker(
 
     const event = existingEvent
       ? await prisma.event.update({
-          where: { id: existingEvent.id },
-          data: {
-            title: repo.name,
-            category: "github",
-            type: "repo",
-            repoName: repo.name,
-            owner: repo.owner.login,
-            stars: repo.stargazers_count,
-            publishedAt: new Date(repo.created_at),
-            rawData: repo,
-          },
-        })
+        where: { id: existingEvent.id },
+        data: {
+          title: repo.name,
+          category: "github",
+          type: "repo",
+          repoName: repo.name,
+          owner: repo.owner.login,
+          stars: repo.stargazers_count,
+          publishedAt: new Date(repo.created_at),
+          rawData: repo,
+        },
+      })
       : await prisma.event.create({
-          data: {
-            title: repo.name,
-            url: repo.html_url,
-            category: "github",
-            type: "repo",
-            repoName: repo.name,
-            owner: repo.owner.login,
-            stars: repo.stargazers_count,
-            publishedAt: new Date(repo.created_at),
-            rawData: repo,
-          },
-        });
+        data: {
+          title: repo.name,
+          url: repo.html_url,
+          category: "github",
+          type: "repo",
+          repoName: repo.name,
+          owner: repo.owner.login,
+          stars: repo.stargazers_count,
+          publishedAt: new Date(repo.created_at),
+          rawData: repo,
+        },
+      });
 
     const analysis = analyzeGithubEvent(repo);
     const score = scoreGithubEvent(repo);

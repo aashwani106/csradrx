@@ -255,6 +255,10 @@ app.get("/research", async (_req, res) => {
   res.json(events);
 });
 
+app.get("/health", (_req, res) => {
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
+});
+
 server.listen(port, () => {
   console.log(`API running on http://localhost:${port}`);
 });
