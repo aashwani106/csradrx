@@ -2,7 +2,6 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import express from "express";
-import cors from "cors";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as hookModule from "../../../packages/core/src/distribution/generateHook";
@@ -55,8 +54,22 @@ const prisma = new PrismaClient({
 });
 
 const app = express();
-app.use(cors());
 const port = Number(process.env.PORT ?? 3000);
+
+// CORS headers via native http createServer wrapper
+import http from "node:http";
+
+const server = http.createServer((req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") {
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+  app(req, res);
+});
 
 const eventSelect = {
   id: true,
@@ -242,6 +255,6 @@ app.get("/research", async (_req, res) => {
   res.json(events);
 });
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`API running on http://localhost:${port}`);
 });

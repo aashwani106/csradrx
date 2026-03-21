@@ -5,13 +5,29 @@ function timeAgo(dateString: string) {
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
-  if (diffInSeconds < 60) return `${diffInSeconds}s ago`;
+  if (diffInSeconds < 60) return `${diffInSeconds}s`;
   const diffInMinutes = Math.floor(diffInSeconds / 60);
-  if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+  if (diffInMinutes < 60) return `${diffInMinutes}m`;
   const diffInHours = Math.floor(diffInMinutes / 60);
-  if (diffInHours < 24) return `${diffInHours}h ago`;
+  if (diffInHours < 24) return `${diffInHours}h`;
   const diffInDays = Math.floor(diffInHours / 24);
-  return `${diffInDays}d ago`;
+  return `${diffInDays}d`;
+}
+
+const SOURCE_COLORS: Record<string, string> = {
+  openai: "#10b981",
+  github: "#8b5cf6",
+  anthropic: "#f59e0b",
+  deepmind: "#3b82f6",
+  google: "#3b82f6",
+  microsoft: "#06b6d4",
+  huggingface: "#eab308",
+  meta: "#6366f1",
+  default: "#6366f1",
+};
+
+function getSourceColor(source: string): string {
+  return SOURCE_COLORS[source.toLowerCase()] ?? SOURCE_COLORS.default;
 }
 
 export default function EventCard({
@@ -23,81 +39,124 @@ export default function EventCard({
   compact?: boolean;
   onClick?: () => void;
 }) {
-  const tags = Array.from(new Set([event.source, event.category, event.type])).filter(Boolean);
+  const color = getSourceColor(event.source);
 
   if (compact) {
     return (
       <button
         onClick={onClick}
-        className="block text-left w-full rounded-lg border border-zinc-800/80 bg-zinc-900/30 p-3 transition hover:border-zinc-700 hover:bg-zinc-800/50"
+        className="group block w-full text-left rounded-lg px-3 py-3 -mx-3 transition-all duration-200"
+        style={{
+          background: "transparent",
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.background = "var(--surface-2)";
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.background = "transparent";
+        }}
       >
-        <div className="mb-1.5 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium tracking-wide text-emerald-400">
-              ⚡ {event.source}
-            </span>
-            <span className="text-xs text-zinc-500" suppressHydrationWarning>{timeAgo(event.publishedAt)}</span>
-          </div>
+        <div className="flex items-center gap-2 mb-1">
+          <span
+            className="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
+            style={{
+              color: color,
+              background: `${color}15`,
+            }}
+          >
+            {event.source}
+          </span>
+          <span
+            className="text-[11px] font-medium"
+            style={{ color: "var(--text-tertiary)" }}
+            suppressHydrationWarning
+          >
+            {timeAgo(event.publishedAt)}
+          </span>
         </div>
 
-        <div className="mb-1 text-[15px] font-medium leading-snug text-zinc-100">
+        <div
+          className="text-[14px] font-medium leading-snug mb-0.5"
+          style={{ color: "var(--text-primary)" }}
+        >
           {event.title}
         </div>
 
         {event.impact && (
-          <div className="mb-2 text-[13px] text-zinc-400">
-            <span className="mr-1 text-zinc-500">→</span>
+          <div
+            className="text-[12.5px] leading-relaxed mt-1"
+            style={{ color: "var(--text-secondary)" }}
+          >
             {event.impact}
           </div>
         )}
-
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {tags.map((tag) => (
-            <span key={tag} className="rounded-md bg-zinc-800/60 px-2 py-0.5 text-[11px] font-medium capitalize text-zinc-400">
-              {tag}
-            </span>
-          ))}
-        </div>
       </button>
     );
   }
 
+  // Trending card
   return (
     <button
       onClick={onClick}
-      className="flex w-full text-left flex-col justify-between rounded-xl border border-zinc-800 bg-zinc-900/20 p-5 transition hover:border-zinc-600 hover:bg-zinc-800/40"
+      className="group block w-full text-left rounded-xl px-5 py-5 transition-all duration-200 border"
+      style={{
+        background: "var(--surface-1)",
+        borderColor: "var(--border)",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.background = "var(--surface-2)";
+        e.currentTarget.style.borderColor = "var(--border-hover)";
+        e.currentTarget.style.transform = "translateY(-1px)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.background = "var(--surface-1)";
+        e.currentTarget.style.borderColor = "var(--border)";
+        e.currentTarget.style.transform = "translateY(0)";
+      }}
     >
-      <div>
-        <div className="mb-3 flex items-center justify-between">
-          <span className="rounded bg-zinc-200 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-zinc-900">
-            🔥 {event.source}
-          </span>
-          <span className="text-sm font-medium text-zinc-500" suppressHydrationWarning>{timeAgo(event.publishedAt)}</span>
-        </div>
-        <div className="mb-2 text-xl font-semibold leading-snug text-white">
-          {event.hook || event.title}
-        </div>
-        {event.title !== event.hook && (
-          <div className="mb-4 text-sm text-zinc-400">
-            {event.title}
-          </div>
-        )}
-        {event.impact && (
-          <div className="text-sm text-zinc-300">
-            <span className="mr-2 border-l-2 border-zinc-600 pl-3 italic text-zinc-400">
-              {event.impact}
-            </span>
-          </div>
-        )}
+      <div className="flex items-center gap-2.5 mb-3">
+        <span
+          className="inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider"
+          style={{
+            color: color,
+            background: `${color}15`,
+          }}
+        >
+          {event.source}
+        </span>
+        <span
+          className="text-[11px] font-medium"
+          style={{ color: "var(--text-tertiary)" }}
+          suppressHydrationWarning
+        >
+          {timeAgo(event.publishedAt)}
+        </span>
       </div>
 
-      <div className="mt-5 flex flex-wrap gap-2">
-        {tags.map((tag) => (
-          <span key={tag} className="rounded-full border border-zinc-700 bg-zinc-800/50 px-3 py-1 text-xs font-medium capitalize text-zinc-300">
-            #{tag}
-          </span>
-        ))}
+      <div
+        className="text-[17px] font-semibold leading-snug tracking-tight mb-1.5"
+        style={{ color: "var(--text-primary)" }}
+      >
+        {event.hook || event.title}
       </div>
+
+      {event.title !== event.hook && (
+        <div
+          className="text-[13px] leading-relaxed mb-2"
+          style={{ color: "var(--text-secondary)" }}
+        >
+          {event.title}
+        </div>
+      )}
+
+      {event.impact && (
+        <div
+          className="text-[12.5px] leading-relaxed mt-2"
+          style={{ color: "var(--text-tertiary)" }}
+        >
+          {event.impact}
+        </div>
+      )}
     </button>
   );
 }
