@@ -9,46 +9,46 @@ function hookFromAiTitle(title: string): string {
   const lowerTitle = title.toLowerCase();
 
   if (lowerTitle.includes("gpt-5.4 mini and nano")) {
-    return "OpenAI just made GPT cheaper to run";
+    return "GPT just became drastically cheaper for production";
   }
 
   if (lowerTitle.includes("prompt injection")) {
-    return "AI agents just got a clearer security playbook";
+    return "The security blueprint for AI agents is finally here";
   }
 
   if (lowerTitle.includes("progress toward agi")) {
-    return "AI progress just got a clearer benchmark";
+    return "A major breakthrough in measuring AGI";
   }
 
   if (lowerTitle.includes("introducing")) {
-    return "A major AI release just landed";
+    return "A massive AI release just dropped that changes the landscape";
   }
 
   if (lowerTitle.includes("security") || lowerTitle.includes("safety")) {
-    return "AI safety just became more actionable";
+    return "New essential guardrails for deploying AI safely";
   }
 
   if (lowerTitle.includes("benchmark") || lowerTitle.includes("system card")) {
-    return "AI evaluation just got more concrete";
+    return "The definitive benchmark for AI models just dropped";
   }
 
   if (lowerTitle.includes("agent")) {
-    return "Agent workflows just got more practical";
+    return "AI agents are becoming production-ready";
   }
 
   if (lowerTitle.includes("api")) {
-    return "Developer integration just got easier";
+    return "A new API is fundamentally changing how developers build with AI";
   }
 
-  return "A meaningful AI update just dropped";
+  return "A meaningful AI update just dropped — ignore the noise";
 }
 
 function hookFromGithubRepo(repoName: string | null | undefined): string {
   if (!repoName) {
-    return "A trending GitHub project is picking up steam";
+    return "A trending open-source project is picking up massive steam";
   }
 
-  return `${repoName} is gaining serious developer attention`;
+  return `${repoName} is gaining serious developer momentum right now`;
 }
 
 export function generateHook(event: HookEvent): string {

@@ -2,6 +2,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv";
 import express from "express";
+import cors from "cors";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as hookModule from "../../../packages/core/src/distribution/generateHook";
@@ -54,11 +55,24 @@ const prisma = new PrismaClient({
 });
 
 const app = express();
+app.use(cors());
 const port = Number(process.env.PORT ?? 3000);
 
-const eventInclude = {
-  analysis: true,
-  score: true,
+const eventSelect = {
+  id: true,
+  category: true,
+  type: true,
+  title: true,
+  repoName: true,
+  owner: true,
+  url: true,
+  publishedAt: true,
+  score: {
+    select: { score: true },
+  },
+  analysis: {
+    select: { summary: true, impact: true },
+  },
 };
 
 function getEventSource(event: { category: string; owner?: string | null }) {
@@ -74,13 +88,15 @@ function toDashboardEvent(event: any) {
     id: event.id,
     source: getEventSource(event),
     category: event.category,
-    hook: generateHook({
+    type: event.type,
+    hook: generateHook!({
       category: event.category,
       type: event.type,
       title: event.title,
       repoName: event.repoName,
     }),
     title: event.title,
+    summary: event.analysis?.summary ?? "",
     impact: event.analysis?.impact ?? "",
     url: event.url,
     publishedAt: event.publishedAt,
@@ -90,7 +106,7 @@ function toDashboardEvent(event: any) {
 
 app.get("/events", async (_req, res) => {
   const events = await prisma.event.findMany({
-    include: eventInclude,
+    select: eventSelect,
     orderBy: [
       { score: { score: "desc" } },
       { publishedAt: "desc" },
@@ -102,13 +118,13 @@ app.get("/events", async (_req, res) => {
 });
 
 app.get("/trending", async (_req, res) => {
-  const last48Hours = new Date(Date.now() - 48 * 60 * 60 * 1000);
+  const timeWindow = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000); // 30 days for MVP
 
   const events = await prisma.event.findMany({
-    include: eventInclude,
+    select: eventSelect,
     where: {
       publishedAt: {
-        gte: last48Hours,
+        gte: timeWindow,
       },
     },
     orderBy: [{ publishedAt: "desc" }],
@@ -117,7 +133,7 @@ app.get("/trending", async (_req, res) => {
 
   const rankedEvents = rankEvents(events).slice(0, 20);
 
-  rankedEvents.forEach((event) => {
+  rankedEvents.forEach((event: any) => {
     console.log("Posted:", event.title, event.ranking.finalScore);
   });
 
@@ -125,13 +141,13 @@ app.get("/trending", async (_req, res) => {
 });
 
 app.get("/dashboard/trending", async (_req, res) => {
-  const last48Hours = new Date(Date.now() - 48 * 60 * 60 * 1000);
+  const timeWindow = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
   const events = await prisma.event.findMany({
-    include: eventInclude,
+    select: eventSelect,
     where: {
       publishedAt: {
-        gte: last48Hours,
+        gte: timeWindow,
       },
     },
     orderBy: [{ publishedAt: "desc" }],
@@ -143,13 +159,13 @@ app.get("/dashboard/trending", async (_req, res) => {
 });
 
 app.get("/dashboard/feed", async (_req, res) => {
-  const last48Hours = new Date(Date.now() - 48 * 60 * 60 * 1000);
+  const timeWindow = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
   const feedWindowEvents = await prisma.event.findMany({
-    include: eventInclude,
+    select: eventSelect,
     where: {
       publishedAt: {
-        gte: last48Hours,
+        gte: timeWindow,
       },
     },
     orderBy: [{ publishedAt: "desc" }],
@@ -159,11 +175,11 @@ app.get("/dashboard/feed", async (_req, res) => {
   const trendingIds = new Set(
     rankEvents(feedWindowEvents)
       .slice(0, 20)
-      .map((event) => event.id)
+      .map((event: any) => event.id)
   );
 
   const liveFeedEvents = feedWindowEvents
-    .filter((event) => {
+    .filter((event: any) => {
       const eventScore = event.score?.score ?? 0;
       return eventScore >= 20 && !trendingIds.has(event.id);
     })
@@ -172,9 +188,50 @@ app.get("/dashboard/feed", async (_req, res) => {
   res.json(liveFeedEvents.map(toDashboardEvent));
 });
 
+app.get("/dashboard/events", async (req, res) => {
+  const timeWindow = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+  const cursor = req.query.cursor as string | undefined;
+  const limit = parseInt(req.query.limit as string) || 30;
+
+  const events = await prisma.event.findMany({
+    select: eventSelect,
+    where: {
+      publishedAt: {
+        gte: timeWindow,
+      },
+    },
+    orderBy: [{ publishedAt: "desc" }],
+    take: 300,
+  });
+
+  const rankedEvents = rankEvents(events);
+  let startIndex = 0;
+  if (cursor) {
+    const cursorIndex = rankedEvents.findIndex((e: any) => e.id === cursor);
+    if (cursorIndex !== -1) startIndex = cursorIndex + 1;
+  }
+
+  res.json(rankedEvents.slice(startIndex, startIndex + limit).map(toDashboardEvent));
+});
+
+app.get("/dashboard/events/new-count", async (req, res) => {
+  const since = req.query.since as string;
+  if (!since) return res.json({ count: 0 });
+
+  const count = await prisma.event.count({
+    where: {
+      createdAt: {
+        gt: new Date(since),
+      },
+    },
+  });
+
+  res.json({ count });
+});
+
 app.get("/research", async (_req, res) => {
   const events = await prisma.event.findMany({
-    include: eventInclude,
+    select: eventSelect,
     where: {
       category: "research",
     },
