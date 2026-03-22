@@ -18,17 +18,7 @@ import express from "express";
 
 
 
-const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Discord bot running ...");
-});
-
-const PORT = process.env.PORT || 10000;
-
-app.listen(PORT, () => {
-  console.log(`Dummy server running on port ${PORT}`);
-});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -154,7 +144,7 @@ client.on("interactionCreate", async (interaction) => {
       if (!selectedChannel || selectedChannel.type !== ChannelType.GuildText) {
         await interaction.reply({
           content: "Choose a text channel for the feed.",
-          ephemeral: true,
+          flags: 64
         });
         return;
       }
@@ -172,7 +162,7 @@ client.on("interactionCreate", async (interaction) => {
 
       await interaction.reply({
         content: `CSRadrX feed set to <#${selectedChannel.id}>`,
-        ephemeral: true,
+        flags: 64
       });
       return;
     }
@@ -188,7 +178,7 @@ client.on("interactionCreate", async (interaction) => {
               config.enabledGithub ? "on" : "off"
             }\nAI: ${config.enabledAi ? "on" : "off"}`
           : "No feed channel configured yet. Use /set-feed-channel.",
-        ephemeral: true,
+          flags: 64
       });
       return;
     }
@@ -200,7 +190,7 @@ client.on("interactionCreate", async (interaction) => {
 
       await interaction.reply({
         content: "CSRadrX feed disabled for this server.",
-        ephemeral: true,
+        flags: 64
       });
     }
   } catch (error) {
@@ -210,7 +200,7 @@ client.on("interactionCreate", async (interaction) => {
       const payload = {
         content:
           "Feed setup failed. Make sure the latest database schema is applied, then retry.",
-        ephemeral: true as const,
+          flags: 64
       };
 
       if (interaction.deferred || interaction.replied) {
@@ -332,3 +322,28 @@ queueEvents.on("completed", ({ jobId }) => {
 await client.login(discordToken);
 console.log(`Discord bot listening on ${redisUrl}`);
 
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Discord bot running ...");
+});
+app.get("/health", (req, res) => {
+  res.status(200).send("ok");
+});
+const PORT = process.env.PORT || 10000;
+
+app.listen(PORT, () => {
+  console.log(`Dummy server running on port ${PORT}`);
+});
+
+process.on("SIGTERM", async () => {
+  console.log("SIGTERM received, shutting down...");
+
+  await worker.close();
+  await queueEvents.close();
+  await prisma.$disconnect();
+  await client.destroy();
+
+  process.exit(0);
+});
