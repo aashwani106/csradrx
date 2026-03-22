@@ -10,6 +10,7 @@ import * as tweetDecisionModule from "../../../packages/core/src/distribution/sh
 import * as aiScoringModule from "../../../packages/core/src/scoring/scoreAiBlogEvent";
 import * as analysisModule from "../../../packages/core/src/analysis/analyzeGithubEvent";
 import * as scoringModule from "../../../packages/core/src/scoring/scoreGithubEvent";
+import express from "express";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -369,3 +370,16 @@ queueEvents.on("failed", ({ jobId, failedReason }) => {
 });
 
 console.log(`Queue worker listening on ${redisUrl}`);
+
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Worker is running 🚀");
+});
+
+const PORT = process.env.PORT || 10000;
+
+app.listen(PORT, () => {
+  console.log(`Dummy server running on port ${PORT}`);
+});
