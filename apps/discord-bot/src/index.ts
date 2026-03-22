@@ -14,6 +14,21 @@ import { Redis } from "ioredis";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as discordModule from "../../../packages/core/src/distribution/postToDiscord";
+import express from "express";
+
+
+
+const app = express();
+
+app.get("/", (req, res) => {
+  res.send("Discord bot running ...");
+});
+
+const PORT = process.env.PORT || 10000;
+
+app.listen(PORT, () => {
+  console.log(`Dummy server running on port ${PORT}`);
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -316,3 +331,4 @@ queueEvents.on("completed", ({ jobId }) => {
 
 await client.login(discordToken);
 console.log(`Discord bot listening on ${redisUrl}`);
+
