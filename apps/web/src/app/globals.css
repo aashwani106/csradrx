@@ -19,7 +19,20 @@
   --color-background: var(--surface-0);
   --color-foreground: var(--text-primary);
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Satoshi', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'SF Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', monospace;
+
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 * {
@@ -31,7 +44,21 @@ body {
   background: var(--surface-0);
   color: var(--text-primary);
   font-family: var(--font-sans);
+  font-weight: 400;
   line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-bold,
+.font-extrabold,
+.font-black {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
 }
 
 ::selection {
@@ -41,11 +68,8 @@ body {
 
 /* Premium background layers */
 .bg-atmosphere {
-  position: fixed;
-  inset: 0;
+  background: var(--surface-0);
   z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
 }
 
 /* Center glow — ambient light behind content */

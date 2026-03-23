@@ -1,22 +1,67 @@
+import React from "react";
+import Navbar from "@/components/landing/Navbar";
+import Hero from "@/components/landing/Hero";
+import LiveFeed from "@/components/landing/LiveFeed";
+import SocialProof from "@/components/landing/SocialProof";
+import Problem from "@/components/landing/Problem";
+import Solution from "@/components/landing/Solution";
+import DataSources from "@/components/landing/DataSources";
+import Pipeline from "@/components/landing/Pipeline";
+import Showcase from "@/components/landing/Showcase";
+import Distribution from "@/components/landing/Distribution";
+import Features from "@/components/landing/Features";
+import Differentiation from "@/components/landing/Differentiation";
+import CTA from "@/components/landing/CTA";
+import Footer from "@/components/landing/Footer";
+import Atmosphere from "@/components/dashboard/Atmosphere";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-black px-6 text-white">
-      <div className="max-w-xl rounded-2xl border border-zinc-800 bg-zinc-950/80 p-8 text-center">
-        <p className="mb-3 text-sm uppercase tracking-[0.3em] text-zinc-500">
-          CSRadrX
-        </p>
-        <h1 className="mb-4 text-3xl font-semibold">Technology intelligence, not a news feed.</h1>
-        <p className="mb-6 text-zinc-400">
-          Open the dashboard to see the highest-signal events ranked by freshness,
-          source quality, and impact.
-        </p>
-        <a
-          href="/dashboard"
-          className="inline-flex rounded-full border border-zinc-700 px-5 py-3 text-sm font-medium transition hover:border-zinc-500 hover:bg-zinc-900"
-        >
-          Open Dashboard
-        </a>
+    <div className="relative min-h-screen bg-atmosphere overflow-x-hidden selection:bg-accent selection:text-white">
+      {/* Background Atmosphere */}
+      <div className="fixed inset-0 z-0">
+        <div className="bg-noise" />
+        <div className="bg-grid" />
+        <Atmosphere />
       </div>
-    </main>
+
+      <Navbar />
+
+      <main className="relative z-10 flex flex-col pt-20">
+
+        <Hero />
+
+
+        <SocialProof />
+
+
+        <Problem />
+
+        <LiveFeed />
+
+
+
+
+
+
+        {/* <Solution /> */}
+
+        {/* <DataSources /> */}
+
+        {/* <Pipeline /> */}
+
+        {/* <Showcase /> */}
+
+        {/* <Distribution /> */}
+
+        {/* <Features /> */}
+
+        {/* <Differentiation /> */}
+
+        {/* <CTA /> */}
+      </main>
+
+      <Footer />
+    </div>
   );
 }
