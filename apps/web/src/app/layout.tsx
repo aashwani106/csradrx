@@ -47,7 +47,11 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/FinalLogo.png",
+    icon: [
+      { url: "/logo/icon-only.jpg", type: "image/jpeg" },
+    ],
+    shortcut: "/logo/icon-only.jpg",
+    apple: "/logo/icon-only.jpg",
   },
 };
 
