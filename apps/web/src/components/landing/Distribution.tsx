@@ -16,13 +16,20 @@ export default function Distribution() {
 
                     <div className="mt-12 space-y-10">
                         {[
-                            { name: "Discord", status: "Active", desc: "Real-time alerts and high-signal ranking in your community channels.", icon: "👾" },
-                            { name: "Slack", status: "Coming Soon", desc: "Production-ready enterprise integrations for engineering teams.", icon: "💬" },
-                            { name: "Twitter / X", status: "Coming Soon", desc: "Automated high-quality summaries for the public dev ecosystem.", icon: "𝕏" }
+                            { name: "Discord", status: "Active", desc: "Real-time alerts and high-signal ranking in your community channels.", image: "/logo/discord2.png" },
+                            { name: "Twitter / X", status: "Active", desc: "Automated high-quality summaries for the public dev ecosystem.", image: "https://cdn.simpleicons.org/x/ffffff" },
+                            { name: "Slack", status: "Coming Soon", desc: "Production-ready enterprise integrations for engineering teams.", image: "/logo/slack3.png" },
+                            { name: "Telegram", status: "Coming Soon", desc: "Fast channel delivery for high-priority updates and lightweight team broadcasts.", image: "https://cdn.simpleicons.org/telegram/ffffff" },
+                            { name: "WhatsApp", status: "Coming Soon", desc: "Direct operational alerts for distributed teams and mobile-first workflows.", image: "https://cdn.simpleicons.org/whatsapp/ffffff" },
+                            // { name: "More", status: "Planned", desc: "Additional outbound channels for teams that want intelligence inside every workflow.", image: "https://cdn.simpleicons.org/rss/ffffff" }
                         ].map((target) => (
                             <div key={target.name} className="flex gap-6 group">
                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950 text-xl shadow-lg transition-all group-hover:scale-110 group-hover:border-accent group-hover:shadow-accent/5">
-                                    {target.icon}
+                                    <img
+                                        src={target.image}
+                                        alt={target.name}
+                                        className="h-6 w-6 object-contain"
+                                    />
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-3">
@@ -71,6 +78,22 @@ export default function Distribution() {
                                     <span className="text-[10px] text-zinc-600">1h ago</span>
                                 </div>
                                 <p className="text-xs text-zinc-300 font-medium">Why we are moving back to bare metal.</p>
+                            </div>
+
+                            <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 opacity-30">
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Vercel</span>
+                                    <span className="text-[10px] text-zinc-600">18h ago</span>
+                                </div>
+                                <p className="text-xs text-zinc-300 font-medium">Global edge network optimizations reduce cold start and response times.</p>
+                            </div>
+
+                            <div className="rounded-lg border border-zinc-800 bg-zinc-900/40 p-4 opacity-30">
+                                <div className="flex justify-between items-center mb-2">
+                                    <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Hacker News</span>
+                                    <span className="text-[10px] text-zinc-600">1h ago</span>
+                                </div>
+                                <p className="text-xs text-zinc-300 font-medium">Developers increasingly adopting local LLMs for privacy and cost control.</p>
                             </div>
                         </div>
                     </div>

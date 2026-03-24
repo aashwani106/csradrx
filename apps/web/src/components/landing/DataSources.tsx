@@ -1,14 +1,14 @@
 import React from "react";
 
 const SOURCES = [
-    { name: "OpenAI", logo: "⚡", accent: "#10a37f" },
-    { name: "DeepMind", logo: "D", accent: "#4285f4" },
-    { name: "GitHub", logo: "H", accent: "#24292f" },
-    { name: "Hacker News", logo: "Y", accent: "#ff6600" },
-    { name: "arXiv", logo: "A", accent: "#b31b1b" },
-    { name: "Anthropic", logo: "A", accent: "#d97757" },
-    { name: "Meta AI", logo: "M", accent: "#0668e1" },
-    { name: "Mistral", logo: "M", accent: "#f3d149" }
+    { name: "OpenAI", logo: "⚡", image: "/logo/open_ai.webp", accent: "#10a37f" },
+    { name: "DeepMind", logo: "D", image: "/logo/Deepmind.jpeg", accent: "#4285f4" },
+    { name: "GitHub", logo: "H", image: "https://cdn.simpleicons.org/github/ffffff", accent: "#24292f" },
+    { name: "Hacker News", logo: "Y", image: "https://cdn.simpleicons.org/ycombinator/ff6600", accent: "#ff6600" },
+    { name: "arXiv", logo: "A", image: "https://cdn.simpleicons.org/arxiv/b31b1b", accent: "#b31b1b" },
+    { name: "Anthropic", logo: "A", image: "https://cdn.simpleicons.org/anthropic/d97757", accent: "#d97757" },
+    { name: "Meta AI", logo: "M", image: "https://cdn.simpleicons.org/meta/0668e1", accent: "#0668e1" },
+    { name: "Mistral", logo: "M", image: "/logo/logopview.png", accent: "#f3d149" }
 ];
 
 export default function DataSources() {
@@ -38,7 +38,15 @@ export default function DataSources() {
                             className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-900 text-2xl font-bold text-white transition-all group-hover:bg-zinc-800"
                             style={{ border: `1px solid ${source.accent}20` }}
                         >
-                            {source.logo}
+                            {source.image ? (
+                                <img
+                                    src={source.image}
+                                    alt={source.name}
+                                    className="h-full w-full rounded-xl object-cover"
+                                />
+                            ) : (
+                                source.logo
+                            )}
                         </div>
 
                         <span className="text-sm font-bold text-zinc-500 tracking-tight transition-colors group-hover:text-white uppercase tracking-wider">{source.name}</span>

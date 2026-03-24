@@ -44,21 +44,21 @@ export default function Home() {
 
 
 
-        {/* <Solution /> */}
+        <Solution />
 
-        {/* <DataSources /> */}
+        <DataSources />
 
-        {/* <Pipeline /> */}
+        <Pipeline />
 
-        {/* <Showcase /> */}
+        <Showcase />
 
-        {/* <Distribution /> */}
+        <Distribution />
 
-        {/* <Features /> */}
+        <Features />
 
-        {/* <Differentiation /> */}
+        <Differentiation />
 
-        {/* <CTA /> */}
+        <CTA />
       </main>
 
       <Footer />

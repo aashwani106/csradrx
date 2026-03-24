@@ -1,41 +1,88 @@
 import React from "react";
 
+// const MOCK_INSIGHTS = [
+//     {
+//         source: "OpenAI",
+//         title: "o3-mini for reasoning",
+//         summary: "New frontier model optimized for complex STEM reasoning and code generation with lower latency.",
+//         impact: "Reduces inference cost by 40% for multi-step reasoning.",
+//         score: 9.8,
+//         type: "release",
+//         time: "2h ago"
+//     },
+//     {
+//         source: "DeepSeek",
+//         title: "DeepSeek-V3 Open Model",
+//         summary: "671B parameter Mixture-of-Experts model rivaling top-tier proprietary models in coding/math.",
+//         impact: "Democratizes state-of-the-art weights for enterprise scaling.",
+//         score: 9.6,
+//         type: "repo",
+//         time: "4h ago"
+//     },
+//     {
+//         source: "Hacker News",
+//         title: "The case for local LLMs",
+//         summary: "Deep-dive into run-times, memory constraints, and privacy benefits of self-hosted inference.",
+//         impact: "Reflects a growing developer shift toward local-first AI development.",
+//         score: 8.5,
+//         type: "article",
+//         time: "8h ago"
+//     }
+// ];
 const MOCK_INSIGHTS = [
     {
-        source: "OpenAI",
-        title: "o3-mini for reasoning",
-        summary: "New frontier model optimized for complex STEM reasoning and code generation with lower latency.",
-        impact: "Reduces inference cost by 40% for multi-step reasoning.",
-        score: 9.8,
-        type: "release",
-        time: "2h ago"
+      source: "OpenAI",
+      title: "GPT-5.4 mini & nano released",
+      summary:
+        "New lightweight models optimized for fast inference and lower cost across production workloads.",
+      impact:
+        "Makes high-quality AI accessible for real-time apps and edge use-cases.",
+      score: 9.7,
+      type: "release",
+      time: "1h ago",
+    },
+ 
+    {
+      source: "GitHub",
+      title: "AI-native code search trending",
+      summary:
+        "New open-source tools integrating semantic search directly into developer workflows.",
+      impact:
+        "Shifts how developers navigate and understand large codebases.",
+      score: 9.1,
+      type: "repo",
+      time: "2h ago",
+    },
+  
+    {
+      source: "Vercel",
+      title: "Edge compute latency improvements",
+      summary:
+        "Global edge network optimizations reduce cold start and response times.",
+      impact:
+        "Enables faster AI-powered frontend and real-time apps.",
+      score: 8.9,
+      type: "infra",
+      time: "6h ago",
     },
     {
-        source: "DeepSeek",
-        title: "DeepSeek-V3 Open Model",
-        summary: "671B parameter Mixture-of-Experts model rivaling top-tier proprietary models in coding/math.",
-        impact: "Democratizes state-of-the-art weights for enterprise scaling.",
-        score: 9.6,
-        type: "repo",
-        time: "4h ago"
+      source: "Hacker News",
+      title: "Rise of local-first AI workflows",
+      summary:
+        "Developers increasingly adopting local LLMs for privacy and cost control.",
+      impact:
+        "Signals shift toward decentralized AI development patterns.",
+      score: 8.6,
+      type: "article",
+      time: "7h ago",
     },
-    {
-        source: "Hacker News",
-        title: "The case for local LLMs",
-        summary: "Deep-dive into run-times, memory constraints, and privacy benefits of self-hosted inference.",
-        impact: "Reflects a growing developer shift toward local-first AI development.",
-        score: 8.5,
-        type: "article",
-        time: "8h ago"
-    }
-];
-
+  ];
 export default function Showcase() {
     return (
         <section id="showcase" className="relative z-10 mx-auto max-w-7xl px-6 py-32 border-t border-zinc-900/50">
             <div className="flex flex-col items-center text-center">
                 <div className="mb-4 inline-flex items-center rounded-full border border-zinc-800 bg-zinc-950 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-zinc-500">
-                    Product Showcase
+                    Our Dashboard 
                 </div>
                 <h2 className="text-3xl font-bold text-white md:text-5xl tracking-tight">Intelligence at scale.</h2>
                 <p className="mt-8 text-lg text-zinc-400 max-w-2xl font-medium">
@@ -44,7 +91,7 @@ export default function Showcase() {
                 </p>
             </div>
 
-            <div className="mt-24 relative max-w-5xl mx-auto">
+            <div className="mt-16 relative max-w-5xl mx-auto">
                 {/* Decorative elements */}
                 <div className="absolute -inset-1 bg-gradient-to-r from-accent/20 via-indigo-500/20 to-accent/20 rounded-3xl blur-2xl opacity-20 -z-10" />
 

@@ -1,4 +1,10 @@
 import React from "react";
+import { Sora } from "next/font/google";
+
+const sora = Sora({
+    subsets: ["latin"],
+    weight: ["600", "700", "800"],
+});
 
 export default function Hero() {
     return (
@@ -17,7 +23,7 @@ export default function Hero() {
                     Now live: Next-Gen Tech Intelligence
                 </div>
 
-                <h1 className="mx-auto max-w-6xl text-5xl font-black tracking-tighter text-white md:text-8xl lg:leading-[1.0]">
+                <h1 className={`${sora.className} mx-auto max-w-6xl text-5xl font-bold tracking-tight text-white md:text-8xl lg:leading-[1.05]`}>
                     Stay Ahead of AI & Tech <br />
                     <span className="bg-gradient-to-b from-white to-zinc-600 bg-clip-text text-transparent">
                         Without the Noise
