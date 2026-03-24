@@ -18,6 +18,31 @@ export const metadata: Metadata = {
     "software engineering news",
   ],
   authors: [{ name: "CSRadrX" }],
+  // openGraph: {
+  //   title: "CSRadrX — High Signal Tech Intelligence",
+  //   description:
+  //     "Stop scrolling. Start knowing. CSRadrX delivers only what matters in AI and technology.",
+  //   url: "https://csradrx-web.vercel.app/",
+  //   siteName: "CSRadrX",
+  //   images: [
+  //     {
+  //       url: "https://csradrx-web.vercel.app/og-image.jpg",
+  //       width: 684,
+  //       height: 691,
+  //       alt: "CSRadrX — Signal over Noise",
+  //     },
+  //   ],
+  //   locale: "en_US",
+  //   type: "website",
+  // },
+  // twitter: {
+  //   card: "summary_large_image",
+  //   title: "CSRadrX — High Signal Tech Intelligence",
+  //   description: "All the important updates. None of the noise.",
+  //   images: ["https://csradrx-web.vercel.app/og-image.jpg"],
+  //   creator: "@csradrx",
+  // },
+
   openGraph: {
     title: "CSRadrX — High Signal Tech Intelligence",
     description:
@@ -26,20 +51,20 @@ export const metadata: Metadata = {
     siteName: "CSRadrX",
     images: [
       {
-        url: "https://csradrx-web.vercel.app/og-image.jpg",
-        width: 684,
-        height: 691,
+        url: "https://csradrx-web.vercel.app/og-image.jpg?v=2",
+        width: 1200,
+        height: 630,
         alt: "CSRadrX — Signal over Noise",
       },
     ],
-    locale: "en_US",
     type: "website",
   },
+  
   twitter: {
     card: "summary_large_image",
     title: "CSRadrX — High Signal Tech Intelligence",
     description: "All the important updates. None of the noise.",
-    images: "https://csradrx-web.vercel.app/og-image.jpg",
+    images: ["https://csradrx-web.vercel.app/og-image.jpg?v=2"],
     creator: "@csradrx",
   },
   robots: {
