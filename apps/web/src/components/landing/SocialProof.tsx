@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 
 // const LOGOS = [
 //     // AI Labs
@@ -112,10 +113,13 @@ export default function SocialProof() {
                                     {/* <span className="text-lg font-bold text-zinc-300 group-hover:text-white transition-colors">
                                         {logo.icon}
                                     </span> */}
-                                    <img
+                                    <Image
                                         src={logo.icon}
                                         alt={logo.name}
+                                        width={24}
+                                        height={24}
                                         className="h-6 w-6 opacity-60 hover:opacity-100 transition"
+                                        unoptimized
                                     />
                                     <span className="text-[10px] font-semibold text-zinc-500 group-hover:text-zinc-200 transition-colors uppercase tracking-widest leading-none">
                                         {logo.name}

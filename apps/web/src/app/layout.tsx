@@ -2,8 +2,53 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "CSRadrX",
-  description: "Real-time technology intelligence dashboard",
+  metadataBase: new URL("https://csradrx-web.vercel.app"),
+  title: {
+    default: "CSRadrX — Signal over Noise in AI & Tech",
+    template: "%s | CSRadrX",
+  },
+  description:
+    "CSRadrX tracks, analyzes, and ranks updates across AI, GitHub, and tech — so you only see what actually matters.",
+  keywords: [
+    "AI updates",
+    "tech news",
+    "developer tools",
+    "GitHub trends",
+    "AI intelligence",
+    "software engineering news",
+  ],
+  authors: [{ name: "CSRadrX" }],
+  openGraph: {
+    title: "CSRadrX — High Signal Tech Intelligence",
+    description:
+      "Stop scrolling. Start knowing. CSRadrX delivers only what matters in AI and technology.",
+    url: "https://csradrx-web.vercel.app/",
+    siteName: "CSRadrX",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CSRadrX — Signal over Noise",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "CSRadrX — High Signal Tech Intelligence",
+    description: "All the important updates. None of the noise.",
+    images: ["/og-image.png"],
+    creator: "@csradrx",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -13,13 +58,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
-        <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400;500;700;900&display=swap" rel="stylesheet" />
-      </head>
       <body className="min-h-screen" suppressHydrationWarning>
         {children}
       </body>

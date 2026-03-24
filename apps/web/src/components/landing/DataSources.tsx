@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 const SOURCES = [
     { name: "OpenAI", logo: "⚡", image: "/logo/open_ai.webp", accent: "#10a37f" },
@@ -39,10 +40,13 @@ export default function DataSources() {
                             style={{ border: `1px solid ${source.accent}20` }}
                         >
                             {source.image ? (
-                                <img
+                                <Image
                                     src={source.image}
                                     alt={source.name}
+                                    width={56}
+                                    height={56}
                                     className="h-full w-full rounded-xl object-cover"
+                                    unoptimized={source.image.startsWith("https://")}
                                 />
                             ) : (
                                 source.logo

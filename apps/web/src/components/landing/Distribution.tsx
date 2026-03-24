@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export default function Distribution() {
     return (
@@ -25,10 +26,13 @@ export default function Distribution() {
                         ].map((target) => (
                             <div key={target.name} className="flex gap-6 group">
                                 <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-950 text-xl shadow-lg transition-all group-hover:scale-110 group-hover:border-accent group-hover:shadow-accent/5">
-                                    <img
+                                    <Image
                                         src={target.image}
                                         alt={target.name}
+                                        width={24}
+                                        height={24}
                                         className="h-6 w-6 object-contain"
+                                        unoptimized={target.image.startsWith("https://")}
                                     />
                                 </div>
                                 <div>

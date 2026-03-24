@@ -1,4 +1,6 @@
 import React from "react";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
     return (
@@ -6,9 +8,11 @@ export default function Footer() {
             <div className="flex flex-col items-center justify-between gap-12 md:flex-row">
                 <div className="flex flex-col items-center md:items-start gap-6">
                     <div className="flex items-center gap-3">
-                        <img
+                        <Image
                             src="/FinalLogo.png"
                             alt="CSRadrX"
+                            width={144}
+                            height={64}
                             className="h-16 w-auto"
                         />
                     </div>
@@ -24,7 +28,7 @@ export default function Footer() {
                         <nav className="flex flex-col gap-3 text-sm font-bold text-zinc-600">
                             <a href="#features" className="hover:text-white transition-colors">Problem</a>
                             <a href="#pipeline" className="hover:text-white transition-colors">Pipeline</a>
-                            <a href="/dashboard" className="hover:text-white transition-colors">Dashboard</a>
+                            <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
                         </nav>
                     </div>
                     <div className="flex flex-col gap-4">

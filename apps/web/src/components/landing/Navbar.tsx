@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -19,9 +20,11 @@ export default function Navbar() {
         >
             <div className="flex items-center gap-2.5">
                 <Link href="/" className="flex items-center">
-                    <img
+                    <Image
                         src="/FinalLogo.png"
                         alt="CSRadrX"
+                        width={108}
+                        height={48}
                         className="h-12 w-auto hover:opacity-80 transition-opacity"
                     />
                 </Link>
