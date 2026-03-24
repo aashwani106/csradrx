@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: "CSRadrX",
     images: [
       {
-        url: "/csRadrX-logo.jpg",
+        url: "https://csradrx-web.vercel.app/og-image.png",
         width: 684,
         height: 691,
         alt: "CSRadrX — Signal over Noise",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "CSRadrX — High Signal Tech Intelligence",
     description: "All the important updates. None of the noise.",
-    images: ["/csRadrX-logo.jpg"],
+    images: "https://csradrx-web.vercel.app/og-image.png",
     creator: "@csradrx",
   },
   robots: {
