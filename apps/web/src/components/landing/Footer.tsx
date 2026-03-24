@@ -32,7 +32,7 @@ export default function Footer() {
                         <nav className="flex flex-col gap-3 text-sm font-bold text-zinc-600">
                             <a href="https://discord.gg" target="_blank" className="hover:text-white transition-colors">Discord</a>
                             <a href="https://github.com" target="_blank" className="hover:text-white transition-colors">GitHub</a>
-                            <a href="https://x.com/csradrx" className="hover:text-white transition-colors">Twitter / X</a>
+                            <a href="https://x.com/csradrx"  target="_blank" className="hover:text-white transition-colors">Twitter / X</a>
                         </nav>
                     </div>
                     <div className="flex flex-col gap-4">

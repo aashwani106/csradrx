@@ -74,7 +74,7 @@ const STEPS = [
     { id: 4, name: "Worker", desc: "LLM Analysis & Scoring", icon: CpuIcon },
     { id: 5, name: "Supabase DB", desc: "Structured Storage", icon: DatabaseIcon },
     { id: 6, name: "Dist. Queue", desc: "Final Processing", icon: PackageIcon },
-    { id: 7, name: "Outbound", desc: "Discord, Slack, X", icon: SendIcon },
+    { id: 7, name: "Outbound", desc: "Dashbord, Slack, X...", icon: SendIcon },
 ];
 
 export default function Pipeline() {

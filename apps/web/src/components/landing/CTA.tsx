@@ -27,6 +27,7 @@ export default function CTA() {
                     <div className="mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
                         <a
                             href="/dashboard"
+                             target="_blank"
                             className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-white px-10 text-base font-bold text-black transition-all hover:bg-zinc-200"
                         >
                             Explore Live Feed
@@ -46,7 +47,7 @@ export default function CTA() {
                             </svg>
                         </a>
                         <a
-                            href="https://discord.gg"
+                            href="https://x.com/csradrx"
                             target="_blank"
                             className="inline-flex h-14 items-center justify-center rounded-full border border-zinc-800 bg-zinc-950/50 px-10 text-base font-bold text-white backdrop-blur-sm transition-all hover:bg-zinc-900"
                         >

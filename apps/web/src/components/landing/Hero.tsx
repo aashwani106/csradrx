@@ -13,7 +13,7 @@ export default function Hero() {
 
             <div className="animate-in fade-in slide-in-from-bottom-8 duration-1000 max-w-7xl mx-auto w-full">
                 <div className="mb-8 inline-flex items-center rounded-full border border-accent/20 bg-accent/5 px-4 py-1.5 text-xs font-bold text-accent backdrop-blur-sm self-center">
-                    <span className="mr-2 flex h-2 w-2 rounded-full bg-accent shadow-[0_0_10px_var(--accent)]"></span>
+                    <span className="mr-2 flex h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,0.45)]"></span>
                     Now live: Next-Gen Tech Intelligence
                 </div>
 
