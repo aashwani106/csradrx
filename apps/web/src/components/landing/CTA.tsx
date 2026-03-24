@@ -27,9 +27,10 @@ export default function CTA() {
                     <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:mt-14 sm:flex-row sm:gap-4">
                         <a
                             href="/dashboard"
-                             target="_blank"
+                            
                             className="group relative inline-flex h-14 w-full items-center justify-center overflow-hidden rounded-full bg-white px-10 text-base font-bold text-black transition-all hover:bg-zinc-200 sm:w-auto"
                         >
+                             {/* target="_blank" */}
                             Explore Live Feed
                             <svg
                                 className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1"
