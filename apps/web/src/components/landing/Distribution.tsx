@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Distribution() {
     return (
-        <section className="relative z-10 mx-auto max-w-7xl px-6 py-32 border-t border-zinc-900/50">
+        <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50">
             <div className="flex flex-col md:flex-row gap-16 items-center">
                 <div className="flex-1">
                     <h2 className="text-3xl font-bold text-white md:text-5xl tracking-tight">

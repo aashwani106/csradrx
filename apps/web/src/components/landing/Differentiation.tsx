@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Differentiation() {
     return (
-        <section className="relative z-10 mx-auto max-w-7xl px-6 py-32 border-t border-zinc-900/50">
+        <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50">
             <div className="flex flex-col items-center text-center">
                 <h2 className="text-3xl font-bold text-white md:text-5xl tracking-tight">
                 A Better Way to Stay Updated
@@ -12,7 +12,7 @@ export default function Differentiation() {
                 </p>
             </div>
 
-            <div className="mt-24 grid gap-8 md:grid-cols-2">
+            <div className="mt-16 grid gap-6 sm:mt-20 sm:gap-8 md:grid-cols-2 md:mt-24">
                 <div className="rounded-3xl border border-zinc-900 bg-zinc-950/70 p-12 opacity-60 backdrop-blur-sm">
                     <h3 className="text-xl font-bold text-zinc-500 line-through tracking-tight">The Old Way</h3>
                     <p className="mt-4 text-sm font-medium text-zinc-600">10 tabs open, random tweets, GitHub, blogs, Twitter, newsletters.</p>

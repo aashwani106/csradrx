@@ -27,7 +27,7 @@ export default function PersonalizationSection() {
     };
 
     return (
-        <section className="relative z-10 mx-auto max-w-6xl px-6 py-32 border-t border-zinc-900/50">
+        <section className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50">
             <div className="absolute inset-x-1/2 top-1/2 -z-10 h-64 w-[42rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/8 blur-3xl" />
 
             <div className="mx-auto max-w-5xl rounded-2xl border border-zinc-800 bg-zinc-950/50 px-8 py-16 text-center shadow-[0_0_40px_rgba(0,0,0,0.15)] backdrop-blur-sm md:px-12">

@@ -300,8 +300,8 @@ export default function LiveFeed() {
     }, [filteredEvents]);
 
     return (
-        <section id="feed" className="relative py-24 overflow-hidden border-y border-white/5 bg-black/20 backdrop-blur-3xl">
-            <div className="container mx-auto px-6 mb-12 text-center">
+        <section id="feed" className="relative overflow-hidden border-y border-white/5 bg-black/20 py-20 sm:py-24 backdrop-blur-3xl">
+            <div className="container mx-auto mb-10 px-4 text-center sm:mb-12 sm:px-6 md:px-8">
                 <h3 className="text-sm font-bold uppercase tracking-[0.2em] text-zinc-500 mb-2">
                     Live Intelligence Feed
                 </h3>

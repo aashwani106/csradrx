@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -13,17 +14,17 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 left-0 right-0 z-50 flex h-20 items-center justify-between px-6 transition-all duration-300 md:px-12 ${scrolled ? "bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-900" : "bg-transparent"
+            className={`fixed top-0 left-0 right-0 z-50 flex h-20 items-center justify-between px-4 transition-all duration-300 sm:px-6 md:px-12 ${scrolled ? "bg-zinc-950/80 backdrop-blur-xl border-b border-zinc-900" : "bg-transparent"
                 }`}
         >
             <div className="flex items-center gap-2.5">
-                <a href="/" className="flex items-center">
+                <Link href="/" className="flex items-center">
                     <img
                         src="/FinalLogo.png"
                         alt="CSRadrX"
                         className="h-12 w-auto hover:opacity-80 transition-opacity"
                     />
-                </a>
+                </Link>
             </div>
 
             <div className="hidden lg:flex items-center gap-10">
@@ -35,12 +36,12 @@ export default function Navbar() {
             </div>
 
             <div className="flex items-center gap-4">
-                <a
+                <Link
                     href="/dashboard"
                     className="group relative inline-flex h-10 items-center justify-center overflow-hidden rounded-full bg-white px-6 text-xs font-bold text-black transition-all hover:bg-zinc-200"
                 >
                     View Feed
-                </a>
+                </Link>
             </div>
         </nav>
     );

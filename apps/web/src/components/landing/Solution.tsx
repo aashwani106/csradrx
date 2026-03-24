@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Solution() {
     return (
-        <section className="relative z-10 mx-auto max-w-7xl px-6 py-32 overflow-hidden">
+        <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 overflow-hidden">
             <div className="flex flex-col items-center text-center">
                 <div className="mb-4 inline-flex items-center rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-accent">
                     The Solution
@@ -16,7 +16,7 @@ export default function Solution() {
                     </span>
                 </h2>
                 <p className="mt-8 max-w-2xl text-lg text-zinc-400">
-                    CSRadrX doesn't just show you what's happening. It processes the chaos
+                    CSRadrX doesn&apos;t just show you what&apos;s happening. It processes the chaos
                     of the tech ecosystem into a single, high-fidelity intelligence stream.
                 </p>
             </div>

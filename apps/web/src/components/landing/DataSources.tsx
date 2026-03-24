@@ -13,7 +13,7 @@ const SOURCES = [
 
 export default function DataSources() {
     return (
-        <section id="sources" className="relative z-10 mx-auto max-w-7xl px-6 py-32 border-t border-zinc-900/50">
+        <section id="sources" className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50">
             <div className="flex flex-col items-center text-center">
                 <h2 className="text-3xl font-bold text-white md:text-5xl tracking-tight">The Ecosystem.</h2>
                 <p className="mt-8 text-lg text-zinc-400 max-w-3xl font-medium tracking-tight">

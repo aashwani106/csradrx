@@ -90,7 +90,7 @@ export default function SocialProof() {
 
     return (
         <section className="relative z-10 border-y border-white/5 bg-black/20 py-8 overflow-hidden">
-            <div className="mx-auto max-w-7xl px-6">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8">
                 <div className="flex flex-col items-center justify-between gap-12 md:flex-row">
                     {/* Static Label */}
                     <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 whitespace-nowrap">

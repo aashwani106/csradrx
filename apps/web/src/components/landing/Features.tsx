@@ -91,7 +91,7 @@ export default function Features() {
     ];
 
     return (
-        <section className="relative z-10 mx-auto max-w-7xl px-6 py-32 border-t border-zinc-900/50">
+        <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50">
             <div className="flex flex-col items-center text-center">
                 {/* <div className="mb-4 text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500">
                     Everything you need to stay ahead — without the noise

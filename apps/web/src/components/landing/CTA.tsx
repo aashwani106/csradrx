@@ -2,8 +2,8 @@ import React from "react";
 
 export default function CTA() {
     return (
-        <section className="relative z-10 mx-auto max-w-7xl px-6 py-32 border-t border-zinc-900/50">
-            <div className="relative rounded-3xl border border-zinc-800 bg-zinc-950/50 p-12 shadow-2xl backdrop-blur-sm lg:p-24 overflow-hidden text-center flex flex-col items-center">
+        <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50">
+            <div className="relative flex flex-col items-center overflow-hidden rounded-3xl border border-zinc-800 bg-zinc-950/50 p-6 text-center shadow-2xl backdrop-blur-sm sm:p-8 md:p-10 lg:p-24">
                 {/* Background atmospheric glow */}
                 <div className="absolute -top-1/2 left-1/2 -translate-x-1/2 h-full w-[800px] bg-accent/5 blur-[120px] pointer-events-none" />
 
@@ -12,11 +12,11 @@ export default function CTA() {
                         <span className="h-2 w-2 rounded-full bg-emerald-400" />
                         Live Now
                     </div>
-                    <h2 className="text-4xl font-bold text-white md:text-6xl tracking-tight">
+                    <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl lg:text-6xl">
                         Ready to see the <br />
                         <span className="text-accent">clean signal?</span>
                     </h2>
-                    <p className="mt-8 text-lg text-zinc-400 max-w-2xl font-medium tracking-tight">
+                    <p className="mt-6 max-w-2xl text-sm font-medium tracking-tight text-zinc-400 sm:mt-8 sm:text-base md:text-lg">
                         {/* Stop scrolling and start knowing. Join the next generation of
                         computer science intelligence today. */}
 
@@ -24,11 +24,11 @@ export default function CTA() {
                         without opening 10 tabs.
                     </p>
 
-                    <div className="mt-14 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                    <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:mt-14 sm:flex-row sm:gap-4">
                         <a
                             href="/dashboard"
                              target="_blank"
-                            className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-full bg-white px-10 text-base font-bold text-black transition-all hover:bg-zinc-200"
+                            className="group relative inline-flex h-14 w-full items-center justify-center overflow-hidden rounded-full bg-white px-10 text-base font-bold text-black transition-all hover:bg-zinc-200 sm:w-auto"
                         >
                             Explore Live Feed
                             <svg
@@ -49,7 +49,7 @@ export default function CTA() {
                         <a
                             href="https://x.com/csradrx"
                             target="_blank"
-                            className="inline-flex h-14 items-center justify-center rounded-full border border-zinc-800 bg-zinc-950/50 px-10 text-base font-bold text-white backdrop-blur-sm transition-all hover:bg-zinc-900"
+                            className="inline-flex h-14 w-full items-center justify-center rounded-full border border-zinc-800 bg-zinc-950/50 px-10 text-base font-bold text-white backdrop-blur-sm transition-all hover:bg-zinc-900 sm:w-auto"
                         >
                             Get updates on
                             <svg

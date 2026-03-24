@@ -79,7 +79,7 @@ const STEPS = [
 
 export default function Pipeline() {
     return (
-        <section id="pipeline" className="mx-auto max-w-7xl px-6 py-32 border-t border-zinc-900/50">
+        <section id="pipeline" className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50 overflow-x-hidden">
             <div className="flex flex-col items-center text-center">
                 <div className="mb-4 inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
                     The Architecture
