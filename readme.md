@@ -4,6 +4,8 @@ CSRadrX is an AI-powered computer science intelligence platform that monitors re
 
 The system processes data using an event-driven pipeline and publishes summarized insights via a dashboard and automated channels.
 
+Live: https://csradrx.live
+
 
 
 Current MVP flow:
