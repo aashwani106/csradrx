@@ -14,6 +14,7 @@ import Differentiation from "@/components/landing/Differentiation";
 import CTA from "@/components/landing/CTA";
 import Footer from "@/components/landing/Footer";
 import Atmosphere from "@/components/dashboard/Atmosphere";
+import PersonalizationSection from "@/components/landing/PersonalizationSection";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <div className="fixed inset-0 z-0">
         <div className="bg-noise" />
         <div className="bg-grid" />
+        <div className="bg-microgrid" />
         <Atmosphere />
       </div>
 
@@ -56,6 +58,7 @@ export default function Home() {
 
         <Features />
 
+        <PersonalizationSection />
         <Differentiation />
 
         <CTA />

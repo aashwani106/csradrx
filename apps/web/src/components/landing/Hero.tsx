@@ -28,7 +28,7 @@ export default function Hero() {
                 </h1>
 
                 <p className="mx-auto mt-8 max-w-xl px-4 text-sm font-medium leading-relaxed tracking-tight text-zinc-400 sm:mt-10 sm:max-w-2xl sm:px-0 sm:text-base md:max-w-3xl md:text-lg lg:max-w-2xl lg:text-xl">
-                    From AI labs to GitHub trends, CSRadrX tracks, analyzes, and ranks updates across the ecosystem — so you get only the signal, not the noise.
+                    From AI labs to GitHub trends, CSRadrX tracks, analyzes, and ranks updates across the ecosystem , so you get only the signal, not the noise.
                 </p>
 
                 <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:mt-14 sm:flex-row sm:gap-4">
