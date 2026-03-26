@@ -49,19 +49,31 @@ export default function Solution() {
                 ].map((feature, i) => (
                     <div
                         key={i}
-                        className="group rounded-2xl border border-zinc-800 bg-zinc-950/40 p-10 transition-all hover:border-zinc-700 hover:bg-zinc-900/60"
+                        className="group relative overflow-hidden rounded-[26px] border border-zinc-800/90 bg-zinc-950/55 p-8 shadow-[0_18px_50px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700 hover:bg-zinc-900/65 sm:p-10"
                     >
-                        <div className="mb-6 h-16 w-16 overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900 group-hover:scale-110 transition-transform">
+                        <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-white/[0.035]" />
+                        <div className="pointer-events-none absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-white/[0.045] to-transparent" />
+                        <div className="pointer-events-none absolute -right-8 top-10 h-24 w-24 rounded-full bg-indigo-500/8 blur-2xl transition-opacity duration-300 group-hover:opacity-100" />
+
+                        <div className="relative mb-7 h-20 overflow-hidden rounded-2xl border border-zinc-800/80 bg-zinc-900/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                             <Image
                                 src={feature.image}
                                 alt={feature.title}
-                                width={64}
-                                height={64}
-                                className="h-full w-full object-cover"
+                                fill
+                                sizes="(min-width: 1024px) 22vw, (min-width: 640px) 45vw, 100vw"
+                                className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
                             />
                         </div>
-                        <h3 className="text-xl font-bold text-white tracking-tight">{feature.title}</h3>
-                        <p className="mt-4 text-sm leading-relaxed text-zinc-500 font-medium">
+
+                        <div className="relative">
+                            {/* <div className="mb-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-600">
+                                Core Capability
+                            </div> */}
+                            <h3 className="text-xl font-bold tracking-tight text-white">{feature.title}</h3>
+                        </div>
+
+                        <p className="relative mt-4 text-sm font-medium leading-relaxed text-zinc-400">
                             {feature.desc}
                         </p>
                     </div>

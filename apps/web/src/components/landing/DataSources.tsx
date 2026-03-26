@@ -27,33 +27,45 @@ export default function DataSources() {
                 {SOURCES.map((source) => (
                     <div
                         key={source.name}
-                        className="group relative flex flex-col items-center justify-center rounded-2xl border border-zinc-900 bg-zinc-950 p-10 transition-all hover:scale-105 hover:bg-zinc-900/40"
+                        className="group relative flex min-h-[210px] flex-col items-center justify-center overflow-hidden rounded-[26px] border border-zinc-800/80 bg-zinc-950/75 px-6 py-8 text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-zinc-700 hover:bg-zinc-900/70 sm:px-8 sm:py-10"
                     >
-                        {/* Glow effect on hover */}
+                        <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-white/[0.035]" />
+                        <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-white/[0.045] to-transparent" />
+                        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
                         <div
-                            className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity blur-2xl rounded-2xl"
+                            className="pointer-events-none absolute left-1/2 top-10 h-24 w-24 -translate-x-1/2 rounded-full opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100"
                             style={{ backgroundColor: source.accent }}
+                        />
+                        <div
+                            className="pointer-events-none absolute inset-x-8 bottom-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                            style={{
+                                background: `linear-gradient(90deg, transparent, ${source.accent}55, transparent)`,
+                            }}
                         />
 
                         <div
-                            className="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-900 text-2xl font-bold text-white transition-all group-hover:bg-zinc-800"
+                            className="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center overflow-hidden rounded-[22px] border bg-zinc-900/95 text-2xl font-bold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_10px_26px_rgba(0,0,0,0.22)] transition-all duration-300 group-hover:scale-105 group-hover:border-white/10 group-hover:bg-zinc-800"
                             style={{ border: `1px solid ${source.accent}20` }}
                         >
+                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/[0.05] to-transparent" />
                             {source.image ? (
                                 <Image
                                     src={source.image}
                                     alt={source.name}
                                     width={56}
                                     height={56}
-                                    className="h-full w-full rounded-xl object-cover"
+                                    className="relative h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110"
                                     unoptimized={source.image.startsWith("https://")}
                                 />
                             ) : (
                                 source.logo
                             )}
                         </div>
-
-                        <span className="text-sm font-bold text-zinc-500 tracking-tight transition-colors group-hover:text-white uppercase tracking-wider">{source.name}</span>
+ 
+                        <span className="mt-2 block text-sm font-bold uppercase tracking-[0.16em] text-zinc-400 transition-colors group-hover:text-white">
+                            {source.name}
+                        </span>
+                        
                     </div>
                 ))}
             </div>
