@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import Reveal from "@/components/motion/Reveal";
 
 export default function Solution() {
     return (
         <section className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 overflow-hidden">
-            <div className="flex flex-col items-center text-center">
+            <Reveal className="flex flex-col items-center text-center" distance={18}>
                 <div className="mb-4 inline-flex items-center rounded-full border border-accent/20 bg-accent/5 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-accent">
                     The Solution
                 </div>
@@ -19,7 +20,7 @@ export default function Solution() {
                     CSRadrX doesn&apos;t just show you what&apos;s happening. It processes the chaos
                     of the tech ecosystem into a single, high-fidelity intelligence stream.
                 </p>
-            </div>
+            </Reveal>
              
             {/* mt-24 grid gap-8 md:grid-cols-3 */}
             <div className="mt-24 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:gap-10">
@@ -47,8 +48,10 @@ export default function Solution() {
                         image: "/d.jpg"
                     }
                 ].map((feature, i) => (
-                    <div
+                    <Reveal
                         key={i}
+                        delay={i * 0.06}
+                        distance={24}
                         className="group relative overflow-hidden rounded-[26px] border border-zinc-800/90 bg-zinc-950/55 p-8 shadow-[0_18px_50px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-zinc-700 hover:bg-zinc-900/65 sm:p-10"
                     >
                         <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-white/[0.035]" />
@@ -76,7 +79,7 @@ export default function Solution() {
                         <p className="relative mt-4 text-sm font-medium leading-relaxed text-zinc-400">
                             {feature.desc}
                         </p>
-                    </div>
+                    </Reveal>
                 ))}
             </div>
         </section>

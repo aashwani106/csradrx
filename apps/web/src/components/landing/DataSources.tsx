@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Reveal from "@/components/motion/Reveal";
 
 const SOURCES = [
     { name: "OpenAI", logo: "⚡", image: "/logo/open_ai.webp", accent: "#10a37f" },
@@ -15,18 +16,20 @@ const SOURCES = [
 export default function DataSources() {
     return (
         <section id="sources" className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50">
-            <div className="flex flex-col items-center text-center">
+            <Reveal className="flex flex-col items-center text-center" distance={18}>
                 <h2 className="text-3xl font-bold text-white md:text-5xl tracking-tight">The Ecosystem.</h2>
                 <p className="mt-8 text-lg text-zinc-400 max-w-3xl font-medium tracking-tight">
                     We ingestion directly from the sources where technical history is being
                     written. CSRadrX acts as a gateway to the global dev ecosystem.
                 </p>
-            </div>
+            </Reveal>
 
             <div className="mt-24 grid grid-cols-2 sm:grid-cols-4 gap-6">
-                {SOURCES.map((source) => (
-                    <div
+                {SOURCES.map((source, i) => (
+                    <Reveal
                         key={source.name}
+                        delay={i * 0.05}
+                        distance={22}
                         className="group relative flex min-h-[210px] flex-col items-center justify-center overflow-hidden rounded-[26px] border border-zinc-800/80 bg-zinc-950/75 px-6 py-8 text-center transition-all duration-300 hover:-translate-y-1.5 hover:border-zinc-700 hover:bg-zinc-900/70 sm:px-8 sm:py-10"
                     >
                         <div className="pointer-events-none absolute inset-0 rounded-[26px] border border-white/[0.035]" />
@@ -66,7 +69,7 @@ export default function DataSources() {
                             {source.name}
                         </span>
                         
-                    </div>
+                    </Reveal>
                 ))}
             </div>
         </section>

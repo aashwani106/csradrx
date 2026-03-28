@@ -1,4 +1,5 @@
 import React from "react";
+import Reveal from "@/components/motion/Reveal";
 
 function SettingsIcon() {
     return (
@@ -80,7 +81,7 @@ const STEPS = [
 export default function Pipeline() {
     return (
         <section id="pipeline" className="mx-auto max-w-7xl px-4 sm:px-6 md:px-8 py-20 sm:py-24 lg:py-32 border-t border-zinc-900/50 overflow-x-hidden">
-            <div className="flex flex-col items-center text-center">
+            <Reveal className="flex flex-col items-center text-center" distance={18}>
                 <div className="mb-4 inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-emerald-500">
                     The Architecture
                 </div>
@@ -89,7 +90,7 @@ export default function Pipeline() {
                     Our multi-stage pipeline is built on a distributed layer that summarizes,
                     scores, and ranks every update in miliseconds.
                 </p>
-            </div>
+            </Reveal>
 
             <div className="mt-24 relative">
                 {/* Connector line (desktop) */}
@@ -97,7 +98,7 @@ export default function Pipeline() {
 
                 <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
                     {STEPS.map((step, i) => (
-                        <div key={step.id} className="relative z-10 flex flex-col items-center text-center group">
+                        <Reveal key={step.id} delay={i * 0.05} distance={24} className="relative z-10 flex flex-col items-center text-center group">
                             <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl border border-zinc-800 bg-zinc-950 shadow-2xl transition-all group-hover:scale-105 group-hover:border-accent group-hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]">
                                 <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900/50 text-zinc-300 transition-all group-hover:border-accent/40 group-hover:text-indigo-400">
                                     <step.icon />
@@ -116,7 +117,7 @@ export default function Pipeline() {
                                     </svg>
                                 </div>
                             )}
-                        </div>
+                        </Reveal>
                     ))}
                 </div>
             </div>

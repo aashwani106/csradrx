@@ -15,6 +15,7 @@ import CTA from "@/components/landing/CTA";
 import Footer from "@/components/landing/Footer";
 import Atmosphere from "@/components/dashboard/Atmosphere";
 import PersonalizationSection from "@/components/landing/PersonalizationSection";
+import Reveal from "@/components/motion/Reveal";
 
 export default function Home() {
   return (
@@ -30,41 +31,22 @@ export default function Home() {
       <Navbar />
 
       <main className="relative z-10 flex flex-col pt-20">
-
         <Hero />
-
-
-        <SocialProof />
-
-
-        <Problem />
-
-        <LiveFeed />
-
-
-
-
-
-
-        <Solution />
-
-        <DataSources />
-
-        <Pipeline />
-
-        <Showcase />
-
-        <Distribution />
-
-        <Features />
-
-        <PersonalizationSection />
-        <Differentiation />
-
-        <CTA />
+        <Reveal><SocialProof /></Reveal>
+        <Reveal delay={0.03}><Problem /></Reveal>
+        <Reveal delay={0.03}><LiveFeed /></Reveal>
+        <Reveal delay={0.03}><Solution /></Reveal>
+        <Reveal delay={0.03}><DataSources /></Reveal>
+        <Reveal delay={0.03}><Pipeline /></Reveal>
+        <Reveal delay={0.03}><Showcase /></Reveal>
+        <Reveal delay={0.03}><Distribution /></Reveal>
+        <Reveal delay={0.03}><Features /></Reveal>
+        <Reveal delay={0.03}><PersonalizationSection /></Reveal>
+        <Reveal delay={0.03}><Differentiation /></Reveal>
+        <Reveal delay={0.03}><CTA /></Reveal>
       </main>
 
-      <Footer />
+      <Reveal delay={0.03}><Footer /></Reveal>
     </div>
   );
 }
